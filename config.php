@@ -39,7 +39,6 @@ $config = array
 		"host" => "localhost",
 		"port" => "3306",
 		"user" => "root",
-		"pass" => "fwGO@)!$",
 		"pass" => "123456",
 		"dbname" => "siscon",
 		"charset" => "utf8",
