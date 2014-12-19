@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php siscon::$global['title'] = '个人资料页-修改头像';?>
+<?php siscon::$global['css'] = array('user');?>
+<?php siscon::$global['plugin'] = array('jcrop/jquery.Jcrop.min.js', 'jcrop/jquery.color.js', 'jcrop/jquery.Jcrop.css');?>
+<?php siscon::$global['p2'] = array('name' => '个人资料');?>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<body>
+<?php siscon::template('inc/menu', 'main')?>
+<style>
+.currentpic
+{
+	border:1px solid red
+}
+.photo img
+{
+	
+	cursor:pointer;
+}
+.nostyle
+{
+	border:0px solid red
+}
+</style>
+<!--content star-->
+<div class="container">
+	<div class="wraper">
+		<?php siscon::template('inc/minimenu', 'main')?>
+		<?php siscon::template('usermenu', 'user')?>
+		<div class="photos-box">
+			<h2>方式一：上传本地图片设置头像。</h2>
+			<div class="mode1 clearfix">
+				<form action="<?php echo siscon::link('upload')?>" method="post" id="f1" enctype ="multipart/form-data" target="f1">
+				<iframe style="display:none" id="f1" name="f1"></iframe>
+				<p class="text"><input type="hidden" value="show" name="function"><input type="hidden" value="user_photo" name="key"><input type="file" name="Filedata" id="Filedata" style="display:none;"onchange="$('#f1').submit();"><a href="javascript:;" onclick="$('#Filedata').click()" class="ui-btn2">选择照片</a><span>提示：仅支持PNG、JPG格式图片，小于5M</span></p>
+				</form>
+				<div <?php if(!$data['info']['pic'] || strstr($data['info']['pic'], '/photo/')):?>style="display:none;"<?php endif;?> id="display">
+				<div class="clearfix">
+					<div class="img-blk" id="img"><?php if($data['info']['pic']):?><img src="<?php echo $data['info']['pic']?>" width="320"/><?php endif;?></div>
+					<div class="photos-blk">
+						<p>您裁剪的图片会自动生成三种尺寸的头像，请注意小尺寸头像是否清晰。</p>
+						<div class="item w180">
+							<div class="face" id="face1" style="width:180px;height:180px;overflow:hidden;"><img src="<?php echo siscon::userPhoto($data['info']['pic'], '180_180')?>" /></div>
+							<span>180x180</span>
+						</div>
+						<div class="item w120">
+							<div class="face" id="face2" style="width:120px;height:120px;overflow:hidden;"><img src="<?php echo siscon::userPhoto($data['info']['pic'], '120_120')?>" /></div>
+							<span>120x120</span>
+						</div>
+						<div class="item w60">
+							<div class="face" id="face3" style="width:60px;height:60px;overflow:hidden;"><img src="<?php echo siscon::userPhoto($data['info']['pic'], '60_60')?>"/></div>
+							<span>60x60</span>
+						</div>
+						<input type="hidden" id="x" name="x">
+						<input type="hidden" id="y" name="y">
+						<input type="hidden" id="w" name="w">
+						<input type="hidden" id="h" name="h">
+						<input type="hidden" id="c1" name="c1" value="">
+						<input type="hidden" id="c2" name="c2" value="">
+						<input type="hidden" id="c3" name="c3" value="">
+
+					</div>
+				</div>
+				<div class="clearfix btns">
+					<a href="javascript:;" onclick="savePhoto(1)"  class="ui-btn2">保存</a><a href="javascript:;" onclick="no()" class="ui-btn3">取消</a>
+				</div>
+				</div>
+			</div>
+
+			<h2>方式二：选择一个您喜欢的头像。</h2>
+			<div class="mode2 ">
+				<ul class="clearfix">
+					<?php foreach($data['photo'] as $k => $v):?>
+					<li onclick="setPhoto($(this))"  class="photo" v="<?php echo $v?>" <?php if($k > 0 && $k%5==0):?>class="last"<?php endif;?>><img <?php if($v == $data['info']['pic']):?>class="currentpic"<?php endif;?> src="<?php echo $v?>" width="120" height="120" /></li>
+					<?php endforeach;?>
+				</ul>
+				<div class="clearfix btns">
+					<a href="javascript:;" onclick="savePhoto(2)" class="ui-btn2">保存</a>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+</div>
+<!--content end-->
+
+
+<?php siscon::template('inc/foot', 'main')?>
+
+<script>
+$(function()
+{
+	
+
+})
+function setPhoto(e)
+{
+	$(".currentpic").removeClass('currentpic');
+	e.find('img').addClass('currentpic');
+}
+function savePhoto(type)
+{
+	if($(".currentpic").length)
+	{
+		var x = $("#x").val();
+		var y = $("#y").val();
+		var w = $("#w").val();
+		var h = $("#h").val();
+		if(type == 1 && (w < 0 || h < 0))
+		{
+			layer.alert('您裁剪的图片有错误');return;
+		}
+		var c1 = $("#c1").val();
+		var c2 = $("#c2").val();
+		var c3 = $("#c3").val();
+		var photo = $(".currentpic").attr('src');
+		$.post('<?php echo siscon::link('user/front/save_photo')?>', {c1:c1,c2:c2,c3:c3,type:type,x:x,y:y,w:w,h:h,photo:photo},function(t)
+		{
+			if(type == 1)
+			{
+				/*
+				var a = t.split('|');
+				$("#face1 img").attr('src', a[0]);
+				$("#face2 img").attr('src', a[1]);
+				$("#face3 img").attr('src', a[2]);
+				*/
+			}
+			layer.alert('保存成功', 1,'信息提示',function(){location.reload()});
+		})
+	}
+	else
+	{
+		layer.alert('您还没有选择一张图片或者上传图片');
+	}
+}
+
+function show(data)
+{
+	console.info(data);
+	if(data.status == 1 || data.status == '1')
+	{
+		$("#display").show();
+		
+		if($(".currentpic").length)
+		{
+			$(".currentpic").removeClass('current');
+		}
+		$("#img").html('<img src="'+data.url+'" class="currentpic nostyle" id="target" width="320"/>');
+		
+		$("#target").Jcrop({
+			//minSelect:[60,60],
+			//minSize:[60,60],
+			//setSelect:[60,60,540,330],
+			onChange:updatePreview,
+			onSelect:updatePreview,
+			aspectRatio:1
+		},function(){
+			// Use the API to get the real image size
+			var bounds=this.getBounds();
+			boundx=bounds[0];
+			boundy=bounds[1];
+			// Store the API in the jcrop_api variable
+			jcrop_api=this;
+		});
+		//$(".photos-blk").hide();
+		$("#face1 img").attr('src', data.url);
+		$("#face2 img").attr('src', data.url);
+		$("#face3 img").attr('src', data.url);
+	}
+	else
+	{
+		layer.alert(data.message);
+	}
+}
+
+function no()
+{
+	if($(".currentpic").length)
+	{
+		layer.confirm('确定取消您所做的操作吗?', function()
+		{ 
+			$("#display").hide();
+			if($(".currentpic").length)
+			{
+				$(".currentpic").removeClass('currentpic');
+			}
+		});
+	}
+	else
+	{
+		layer.alert('请先上传图片');
+	}
+}
+function updatePreview(c)
+{
+	$("#x").val(c.x);
+	$("#y").val(c.y);
+	$("#w").val(c.w);
+	$("#h").val(c.h);
+
+	if(parseInt(c.w)>0)
+	{
+		var rx=180/c.w;
+		var ry=180/c.h;
+		var w = Math.round(rx*boundx);
+		var h = Math.round(ry*boundy);
+		var x = Math.round(rx*c.x);
+		var y = Math.round(ry*c.y);
+		$("#c1").val('180_180|'+w+'|'+h+'|'+x+'|'+y);
+		$("#face1 img").css({
+			width:w+"px",
+			height:h+"px",
+			marginLeft:"-"+x+"px",
+			marginTop:"-"+y+"px"
+		});
+		
+		var rx=120/c.w;
+		var ry=120/c.h;
+		var w = Math.round(rx*boundx);
+		var h = Math.round(ry*boundy);
+		var x = Math.round(rx*c.x);
+		var y = Math.round(ry*c.y);
+		$("#c2").val('120_120|'+w+'|'+h+'|'+x+'|'+y);
+		$("#face2 img").css({
+			width:w+"px",
+			height:h+"px",
+			marginLeft:"-"+x+"px",
+			marginTop:"-"+y+"px"
+		});
+		
+		var rx=60/c.w;
+		var ry=60/c.h;
+		var w = Math.round(rx*boundx);
+		var h = Math.round(ry*boundy);
+		var x = Math.round(rx*c.x);
+		var y = Math.round(ry*c.y);
+		$("#c3").val('60_60|'+w+'|'+h+'|'+x+'|'+y);
+		$("#face3 img").css({
+			width:w+"px",
+			height:h+"px",
+			marginLeft:"-"+x+"px",
+			marginTop:"-"+y+"px"
+		});
+	};
+};
+
+</script>
+
+</body>
+</html>

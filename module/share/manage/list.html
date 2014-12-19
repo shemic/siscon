@@ -1,0 +1,81 @@
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>分享日志列表</strong></div>
+                <div class="links-box">
+                快捷入口：<a href="<?php echo siscon::link('share/manage/list');?>" class="btn btn-default btn-xs mr5 link" role="button">分享日志</a><a href="<?php echo siscon::link('share/manage/total_list');?>" class="btn btn-default btn-xs mr5 link" role="button">分享统计</a><a href="<?php echo siscon::link('share/manage/reflux_list');?>" class="btn btn-default btn-xs mr5 link" role="button" style="display:none;">分享回流日志</a>
+            </div>
+                
+                <div class="panel-body">
+
+				<form action="<?php echo siscon::link('share/manage/list');?>" class="form-horizontal search" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>		
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('share/manage/list/');?>" />
+            
+            <div class="search-box clearfix">
+				<label>关键字：<input type="text" name="search_name" id="search_name" placeholder="请输入分享地址" class="m-wrap medium" value="<?php if(isset($data['search'])):?><?php echo $data['search']['name'];?><?php endif;?>"/></label>  
+				<label class="control-label">选择平台： 
+
+					<select name="search_platform" id="search_platform" >
+						<option value="-1">不选择</option>
+						<?php foreach($data['platform'] as $k => $v):?>
+						<option value="<?php echo $v[0];?>" <?php if(isset($data['search']) && $data['search']['platform'] == $v[0]):?>selected<?php endif;?>><?php echo $v[0];?></option>
+						<?php endforeach;?>
+					</select>
+</label>
+
+			<label class="control-label">分享时间：
+
+			<input type="text" name="search_sctime"  placeholder="请选择分享时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['sctime']):?><?php echo $data['search']['sctime'];?><?php endif;?>"/>
+			-
+			<input type="text" name="search_ectime"  placeholder="请选择分享时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['ectime']):?><?php echo $data['search']['ectime'];?><?php endif;?>"/>
+</label>
+		<label class="control-label">排序：
+
+
+			<select name="search_order" id="search_order" >
+				<?php foreach($data['order'] as $k => $v):?>
+				<option value="<?php echo $k;?>" <?php if(isset($data['search']) && $data['search']['order'] == $k):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+				<?php endforeach;?>
+			</select>
+
+</label>
+               <input type="button" value="查询" class="search-btn" onclick="search();">
+			   </form>
+            </div>
+<!-- BEGIN TABLE -->
+            <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
+                <thead>
+                    <tr role="row">
+
+						<th>分享内容</th>
+						<th>IP</th>
+						<th>城市</th>
+						<th>浏览器</th>
+                        <th>平台</th>
+						<th>时间</th>
+
+
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+					
+					<?php foreach($data['list']['data'] as $k => $v):?>
+                    <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
+						<td><a href="<?php echo $v['url']?>" target="_blank"><?php echo $v['title'];?></a></td>
+                        <td><?php echo $v['ip']?></td>
+                        <td><?php echo $v['city']?></td>
+                        <td><?php echo $v['browser']?></td>
+                        <td><?php echo $v['platform']?></td>
+                        <td><?php echo  date('Y-m-d H:i:s', $v['cdate'])?></td>
+                    </tr>
+                    <?php endforeach;?>
+                    
+                </tbody>
+            </table>
+            <!-- END TABLE -->
+
+            <?php echo $data['list']['page'];?>
+            
+            </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

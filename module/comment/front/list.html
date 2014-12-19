@@ -1,0 +1,26 @@
+<?php if($data['state'] == 2):?>
+
+<?php siscon::template('update', 'comment', $data)?>
+<script>$("#comment_num").html('<?php echo $data['list']['total']?>')</script>
+
+<div id="comment_content" class="comment_content">   
+<?php endif;?>
+                    <?php foreach($data['list']['data'] as $k => $v):?>           
+                    <div class="reply clearfix">
+                 		<span class="time"><?php echo date('Y-m-d H:i:s', $v['cdate'])?></span>
+                 		<div class="facebox">
+                        <?php $user = siscon::user($v['uid'])?>
+                 			<img src="<?php if($user && $user['pic']):?><?php echo siscon::userPhoto($user['pic'], '60_60')?><?php else:?><?php echo siscon::face()?><?php endif;?>" width="50" height="50">
+                 		</div>
+                 		<p  class="username"><?php if($user):?><?php echo $user['username']?><?php elseif($v['city']):?><?php echo $v['city']?>用户<?php else:?>匿名用户<?php endif;?></p>
+                 		<p class="text"><?php echo $v['content']?></p>
+					</div>
+                    <?php endforeach;?>
+<?php if($data['state'] == 2):?>
+
+</div>	
+<?php echo $data['list']['page']?>
+<?php endif;?>
+
+
+

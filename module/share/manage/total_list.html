@@ -1,0 +1,82 @@
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>分享统计列表</strong></div>
+                <div class="links-box">
+                快捷入口：<a href="<?php echo siscon::link('share/manage/list');?>" class="btn btn-default btn-xs mr5 link" role="button">分享日志</a><a href="<?php echo siscon::link('share/manage/total_list');?>" class="btn btn-default btn-xs mr5 link" role="button">分享统计</a><a href="<?php echo siscon::link('share/manage/reflux_list');?>" class="btn btn-default btn-xs mr5 link" role="button" style="display:none;">分享回流日志</a>
+            </div>
+                
+                <div class="panel-body">
+
+				<form action="<?php echo siscon::link('share/manage/total_list');?>" class="form-horizontal search" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>		
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('share/manage/total_list/');?>" />
+            
+            <div class="search-box clearfix">
+				
+				<label class="control-label">选择栏目：
+
+				<select name="search_cate_id" id="search_cate_id" >
+					<option value="-1">不选择</option>
+					<?php foreach($data['cate'] as $k => $v):?>
+					<?php if($v['cate_id'] <= 0): ?>
+					<option value="<?php echo $v['id'];?>" <?php if(isset($data['search']) && $data['search']['cate_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+
+					<?php foreach($data['cate'] as $a => $b):?>
+						<?php if($b['cate_id'] == $v['id']): ?>
+
+						<option value="<?php echo $b['id'];?>" <?php if(isset($data['search']) && $data['search']['cate_id'] == $b['id']):?>selected<?php endif;?>>----<?php echo $b['name'];?></option>
+
+						<?php endif;?>
+
+					<?php endforeach;?>
+
+
+					<?php endif;?>
+					<?php endforeach;?>
+				</select>
+</label>
+
+		<label class="control-label">排序：
+
+
+			<select name="search_order" id="search_order" >
+				<?php foreach($data['order'] as $k => $v):?>
+				<option value="<?php echo $k;?>" <?php if(isset($data['search']) && $data['search']['order'] == $k):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+				<?php endforeach;?>
+			</select>
+
+</label>
+               <input type="button" value="查询" class="search-btn" onclick="search();">
+			   </form>
+            </div>
+<!-- BEGIN TABLE -->
+            <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
+                <thead>
+                    <tr role="row">
+
+						<th>文章名</th>
+						<th>文章所属栏目</th>
+						<th>分享次数</th>
+
+
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+					
+					<?php foreach($data['list']['data'] as $k => $v):?>
+                    <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
+						<td><a href="<?php echo $v['url']?>" target="_blank"><?php echo $data['article'][$v['article']]['name'];?></a></td>
+                        <td><?php echo $data['cate'][$v['cate']]['name'];?></td>
+                        <td><?php echo $v['total']?></td>
+                    </tr>
+                    <?php endforeach;?>
+                    
+                </tbody>
+            </table>
+            <!-- END TABLE -->
+
+            <?php echo $data['list']['page'];?>
+            
+            </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

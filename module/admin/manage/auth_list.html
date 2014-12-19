@@ -1,0 +1,48 @@
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>权限列表</strong></div>
+                <div class="panel-body">
+
+<!-- BEGIN TABLE -->
+            <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
+                <thead>
+                    <tr role="row">
+                        <th>
+                            <input type="checkbox" class="group-checkable">
+                        </th>
+                        <th>权限名</th>
+
+						<th>权限路径</th>
+
+						<th>更新时间</th>
+
+						<th>操作者/发布者</th>
+
+						<th>管理</th>
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+					
+					<?php foreach($data['list']['data'] as $k => $v):?>
+                    <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
+                        <td><input type="checkbox" class="checkboxes" value="<?php echo $v['id'];?>"></td>
+                       <td><?php echo $v['name'];?></td>
+
+						<td><?php echo $v['auth'];?></td>
+
+						<td><?php echo date('Y-m-d H:i:s', $v['mdate']);?></td>
+						
+						<td><?php echo $v['muser'];?>/<?php echo $v['cuser'];?></td>
+
+                        <td><a href="<?php echo siscon::link('admin/manage/auth_update/id=' . $v['id']);?>" class="btn btn-default btn-xs mr5 link" role="button">编辑</a></td>
+                    </tr>
+                    <?php endforeach;?>
+                    
+                </tbody>
+            </table>
+            <!-- END TABLE -->
+
+            <?php echo $data['list']['page'];?>
+            
+            </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

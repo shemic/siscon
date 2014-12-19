@@ -1,0 +1,194 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>更新抓取配置</strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('happy/manage/update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('happy/manage/list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+
+                        <div class="form-group">
+
+							<label class="col-sm-2 control-label">配置名称：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" name="name" id="name" placeholder="请输入名称" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+
+								<span class="help-inline">配置名称[必填]</span>
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">选择栏目<font color="red">*</font>：</label>
+                            <div class="col-sm-6">
+                            
+								<select name="cate_id" id="cate_id" class="input-xlarge validate[required]">
+									<option value="-1">临时栏目</option>
+									<?php foreach($data['cate'] as $k => $v):?>
+									<?php if($v['cate_id'] <= 0): ?>
+									<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && $data['info']['cate_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+
+									<?php foreach($data['cate'] as $a => $b):?>
+										<?php if($b['cate_id'] == $v['id']): ?>
+
+										<option value="<?php echo $b['id'];?>" <?php if(isset($data['info']) && $data['info']['cate_id'] == $b['id']):?>selected<?php endif;?>>----<?php echo $b['name'];?></option>
+
+										<?php endif;?>
+
+									<?php endforeach;?>
+
+
+									<?php endif;?>
+									<?php endforeach;?>
+								</select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">类型：</label>
+                            <div class="col-sm-6">
+
+								<select name="type" id="type" >
+									<option value="-1">不选择</option>
+									<?php foreach($data['type'] as $k => $v):?>
+									<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && $data['info']['type'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+									<?php endforeach;?>
+								</select>
+                            </div>
+                        </div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置当前入口网址：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="site" id="site" placeholder="请输入网址" class="form-control validate[required]" ><?php if(isset($data['info'])):?><?php echo $data['info']['site'];?><?php endif;?></textarea>
+
+								<span class="help-inline">配置的网址[必填]</span>
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">入口网址分页规则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="page" id="page" placeholder="入口网址分页规则" class="form-control" ><?php if(isset($data['info'])):?><?php echo $data['info']['page'];?><?php endif;?></textarea>
+
+								<span class="help-inline">入口网址分页规则</span>
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置每个页面的匹配正则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="site_rule" id="site_rule" placeholder="请输入配置网址的匹配正则" class="form-control validate[required]" ><?php if(isset($data['info'])):?><?php echo $data['info']['site_rule'];?><?php endif;?></textarea>
+
+								<span class="help-inline">配置网址的匹配正则[必填]</span>
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置标题的匹配正则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="name_rule" id="name_rule" placeholder="请输入配置标题的匹配正则" class="form-control validate[required]"  ><?php if(isset($data['info'])):?><?php echo $data['info']['name_rule'];?><?php endif;?></textarea>
+
+								<span class="help-inline">配置标题的匹配正则[必填]</span>
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置图片/视频/文字的匹配正则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="pic_rule" id="pic_rule" placeholder="请输入配置图片/视频/文字的匹配正则" class="form-control validate[required]" ><?php if(isset($data['info'])):?><?php echo $data['info']['pic_rule'];?><?php endif;?></textarea>
+
+								<span class="help-inline">配置图片/视频/文字的匹配正则，如匹配文字，下边的内容无需填写[必填]</span>
+
+							</div>
+
+						</div>
+						
+						
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置内容的匹配正则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="content_rule" id="content_rule" placeholder="请输入配置内容的匹配正则" class="form-control" ><?php if(isset($data['info'])):?><?php echo $data['info']['content_rule'];?><?php endif;?></textarea>
+
+								<span class="help-inline">配置内容的匹配正则[必填]</span>
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置时间的匹配正则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="date_rule" id="date_rule" placeholder="请输入配置时间的匹配正则" class="form-control" ><?php if(isset($data['info'])):?><?php echo $data['info']['date_rule'];?><?php endif;?></textarea>
+
+								<span class="help-inline">配置时间的匹配正则[必填]</span>
+
+							</div>
+
+						</div>
+
+						<div class="form-group" >
+                            <label class="col-sm-2 control-label">选择开始抓取时间：</label>
+                            <div class="col-sm-2" >
+                                <div  class="input-group date " id="datetimepicker">
+									<input type="text" name="sdate" id="sdate" placeholder="选择抓取时间" class="form-control"  onclick="WdatePicker()" value="<?php if(isset($data['info']) && $data['info']['sdate']):?><?php echo date('Y-m-d H:i:s', $data['info']['sdate']);?><?php endif;?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+
+							<label class="col-sm-2 control-label">填写间隔秒数：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" name="second" id="second" placeholder="请输入网址" class="form-control" <?php if(isset($data['info'])):?>value="<?php echo $data['info']['second'];?>"<?php endif;?>/>
+
+								<span class="help-inline">不填写则只抓取一次</span>
+
+							</div>
+
+						</div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

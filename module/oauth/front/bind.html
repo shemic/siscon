@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php siscon::$global['title'] = $data['name'] . '帐号绑定设置';?>
+<?php siscon::$global['css'] = array('user');?>
+<?php siscon::$global['plugin'] = array('valid/jquery.validationEngine-zh_CN.js', 'valid/jquery.validationEngine.js', 'valid/validationEngine.jquery.css');?>
+<?php siscon::$global['p2'] = array('name' => $data['name'] . '帐号绑定设置');?>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<body>
+<?php siscon::template('inc/menu', 'main')?>
+<!--content star-->
+<div class="container">
+	<div class="wraper">
+		<?php siscon::template('inc/minimenu', 'main')?>
+		
+		<div class="set-box">
+			<div class="text">欢迎使用<?php echo $data['name'];?>登录<?php echo siscon::$global['define']['title']?>，请确认您的资料，创建帐号</div>
+				<form class="set-form post" id="submit_form" method="post" target="f1" action="<?php echo siscon::link('profile')?>">
+                <iframe id="f1" name="f1" style="display:none;" ></iframe>
+                <input type="hidden" name="function" value="show" />
+                <input type="hidden" id="update_link" name="update_link" value="<?php echo $data['refer'];?>" />
+                <input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+                <input type="hidden" name="token_id" value="<?php if(isset($data['token'])):?><?php echo $data['token']['token_id'];?><?php endif;?>" />
+				<div class="item">
+					<label></label>
+					<div class="user-name">
+						<p>Hi，<?php echo $data['user']['username']?></p>
+						<div class="face"><?php if($data['user']['avatar']):?><input type="hidden" name="avatar" value="<?php echo $data['user']['avatar'];?>" /><img src="<?php echo siscon::userPhoto($data['user']['avatar'], '180_180')?>" /><?php endif;?><a href="<?php echo siscon::link('user-photo')?>" style="display:none;">修改头像</a></div>
+					</div>
+				</div>
+				<div class="item">
+					<label>昵称：</label>
+					<input id="username" name="username" class="inputs validate[required,custom[username],ajax[ajaxUsernameCallPhp]]]" type="text" value="<?php echo $data['user']['username']?>" /> 
+				</div>
+				<div class="item">
+					<label>手机号：</label>
+					<input id="mobile" name="mobile" class="inputs validate[custom[phone]]" type="text" value="<?php echo $data['user']['mobile']?>" /> 
+				</div>
+				<div class="item">
+					<label>性别：</label>
+					<div class="user-gender">
+						<span value="bm"class="bm <?php if($data['user']['gender'] == 'n'):?>bmon<?php endif;?>">保密</span><span value="man"class="man <?php if($data['user']['gender'] == 'm'):?>manon<?php endif;?>">男</span><span value="women"class="women <?php if($data['user']['gender'] == 'f'):?>womenon<?php endif;?>">女</span>
+                        <input type="hidden" name="sex" id="sex" value="<?php echo $data['info']['sex']?>"/>
+					</div>
+				</div>
+				<div class="ty-item">
+					<p style="font-size:16px;"><input type="checkbox" id="user" name="user" value="1" class="validate[required]" checked/>我已阅读并同意用户《<a href="<?php echo siscon::link('privacy')?>" target="_blank">隐私政策</a>》</p>
+				</div>
+				<input type="button" id="edit" class="ui-btn2" value="修改资料">
+			</form>
+		</div>
+	</div>	
+	
+</div>
+<!--content end-->
+
+<?php siscon::template('inc/foot', 'main')?>
+
+<script>
+	$(function(){
+        $("#edit").bind('click',function()
+        {
+            edit();
+        })
+		var gender = $('.user-gender');
+		var genderItem = gender.find('span');
+	    var sex = 'bm';	
+		genderItem.click(function(){
+            $('.'+sex+'on').removeClass(sex+'on');
+			sex = $(this).attr('value');
+			$(this).addClass(sex + 'on');
+            $("#sex").val(sex);
+		});
+		
+		$('.user-gender span').each(function()
+		{
+			if($(this).attr('class').indexOf('on') != -1)
+			{
+				$(this).click();
+			}
+		});
+		
+        $(".post").validationEngine(
+        {
+            ajaxFormValidationMethod: 'post',
+            promptType:'diy'
+        }
+        );
+	});
+    function edit()
+    {
+        //$("#edit").unbind('click').val('数据提交中...');
+        $(".post").submit();
+    
+    }
+    function show(t,send)
+    {
+        //$("#edit").click(function(){edit()}).val('修改资料');
+        location.href = '<?php echo $data['refer'];?>';
+    }
+</script>
+
+
+</body>
+</html>

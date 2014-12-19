@@ -1,0 +1,20 @@
+					<div class="comments-hd">
+                    <?php if($data['user']):?>
+
+					您好,<a href="<?php echo siscon::link('profile')?>" target="_blank"><?php echo $data['user']['username']?></a>
+                                       <?php else:?>
+					请<a link="<?php echo siscon::link('login')?>" class="login">登录</a>后发表评论。 还没有帐号 现在<a href="<?php echo siscon::link('reg')?>" >注册</a> , 也可以使用<a href="<?php echo siscon::link('at/get?id=100')?>">新浪微博</a>或<a href="<?php echo siscon::link('at/get?id=101')?>">QQ帐号</a>直接登入。
+    		        <?php endif;?>
+                    </div>
+    		        <div class="comments-bd">
+    		       		<form class="reply-form clearfix">
+    		        	<textarea name="comment_content"id="comment_content" placeholder="请输入点评内容" value=""></textarea>
+                     	<div class="info clearfix">
+                     		<?php if($data['user']['weibo'] == 1):?><p><input type="checkbox" name="weibo" id="weibo" value="1"/><span>同步到sina微博</span></p><?php endif;?>
+                     		<?php if($data['user']):?><a href="javascript:;" onclick="comment_send(<?php echo $data['did']?>,<?php echo $data['type']?>)" class="sub">发送</a><?php else:?><a href="javascript:;" onclick="comment_send(<?php echo $data['type']?>,<?php echo $data['did']?>)" class="sub">匿名发送</a><?php endif;?>
+                     	</div>
+                     	</form>
+                    </div>
+<script>
+bindLogin();
+</script>

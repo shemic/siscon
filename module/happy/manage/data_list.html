@@ -1,0 +1,188 @@
+﻿<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>数据列表</strong></div>
+                
+                <div class="panel-body">
+					
+					<div class="links-box">
+                快捷入口：<a href="<?php echo siscon::link('happy/front/all');?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看前台列表</a><a style="display:none;" href="<?php echo siscon::link('happy/manage/data_update');?>" class="btn btn-default btn-xs mr5 link" role="button">添加新数据</a>
+            </div>
+            
+				<form action="<?php echo siscon::link('happy/manage/data_list');?>" class="form-horizontal search" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('happy/manage/data_list/');?>" />
+
+            <div class="search-box clearfix">
+				<label>关键字：<input type="text" name="search_name" id="search_name" placeholder="请输入标题关键字" class="m-wrap medium" value="<?php if(isset($data['search'])):?><?php echo $data['search']['name'];?><?php endif;?>"/></label>  
+
+				<label class="control-label">选择类型：
+
+
+					<select name="search_type" id="search_type" >
+						<option value="-1">不选择</option>
+						<?php foreach($data['type'] as $k => $v):?>
+						<option value="<?php echo $v['id'];?>" <?php if(isset($data['search']) && $data['search']['type'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+						<?php endforeach;?>
+					</select>
+</label>
+
+<label class="control-label">选择状态：
+
+
+					<select name="search_status" id="search_status" >
+						<option value="-1">不选择</option>
+						<?php foreach($data['status'] as $k => $v):?>
+						<option value="<?php echo $v['id'];?>" <?php if(isset($data['search']) && $data['search']['status'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+						<?php endforeach;?>
+					</select>
+</label>
+
+			<label class="control-label">选择栏目：
+
+				<select name="search_cate_id" id="search_cate_id" >
+					<option value="-1">不选择</option>
+					<?php foreach($data['cate'] as $k => $v):?>
+					<?php if($v['cate_id'] <= 0): ?>
+					<option value="<?php echo $v['id'];?>" <?php if(isset($data['search']) && $data['search']['cate_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+
+					<?php foreach($data['cate'] as $a => $b):?>
+						<?php if($b['cate_id'] == $v['id']): ?>
+
+						<option value="<?php echo $b['id'];?>" <?php if(isset($data['search']) && $data['search']['cate_id'] == $b['id']):?>selected<?php endif;?>>----<?php echo $b['name'];?></option>
+
+						<?php endif;?>
+
+					<?php endforeach;?>
+
+
+					<?php endif;?>
+					<?php endforeach;?>
+				</select>
+</label>
+
+			<label class="control-label">发布时间：
+
+			<input type="text" name="search_sctime"  placeholder="请选择发布时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['sctime']):?><?php echo $data['search']['sctime'];?><?php endif;?>"/>
+			-
+			<input type="text" name="search_ectime"  placeholder="请选择发布时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['ectime']):?><?php echo $data['search']['ectime'];?><?php endif;?>"/>
+</label>
+		<label class="control-label">排序：
+
+
+			<select name="search_order" id="search_order" >
+				<?php foreach($data['order'] as $k => $v):?>
+				<option value="<?php echo $k;?>" <?php if(isset($data['search']) && $data['search']['order'] == $k):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+				<?php endforeach;?>
+			</select>
+
+</label>
+               <input type="button" value="查询" class="search-btn" onclick="search();">
+			   </form>
+            </div>
+            
+<!-- BEGIN TABLE -->
+            <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
+                <thead>
+                    <tr role="row">
+                        <th>
+                            <input type="checkbox" class="group-checkable">
+                        </th>
+                        <th>编号（<?php echo $data['list']['total'];?>）</th>
+                        
+                        <th>封面</th>
+
+						<th>更新时间 / 生成时间</th>
+						
+						<th>发布</th>
+
+						<th>管理</th>
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+					
+					<?php foreach($data['list']['data'] as $k => $v):?>
+                    <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
+                        <td><input type="checkbox" class="checkboxes" value="<?php echo $v['id'];?>"></td>
+                        <td><?php echo $v['id'];?></td>
+                        
+                        <td><a href="<?php echo siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank"><img src="<?php echo siscon::pic($v['pic'])?>" alt="<?php echo $v['name'];?>" width="200"/></a>
+                        <br /><br />
+                        <a href="<?php echo siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank"><?php echo $v['name'];?>（<?php echo $v['num'];?>）</a></td>
+
+						<td><?php echo date('Y-m-d H:i:s', $v['mdate']);?><br /><?php echo date('Y-m-d H:i:s', $v['zdate']);?></td>
+						
+						<td>
+							发布时间：
+							<input type="text" name="cdate_<?php echo $v['id'];?>" id="cdate_<?php echo $v['id'];?>" style="width:150px;" readonly onclick="WdatePicker({onpicked:function(dp){set('cdate', dp.cal.getNewDateStr(), <?php echo $v['id'];?>)}})" value="<?php if($v['cdate']):?><?php echo date('Y-m-d H:i:s', $v['cdate']);?><?php endif;?>"/>
+							<br /><br />
+							栏目：
+							<select name="cate_id_<?php echo $v['id'];?>" id="cate_id_<?php echo $v['id'];?>" onchange="set('cate_id', $(this).val(), <?php echo $v['id'];?>)">
+								<option value="-1">不选择</option>
+								<?php foreach($data['cate'] as $i => $j):?>
+								<?php if($j['cate_id'] <= 0): ?>
+								<option value="<?php echo $j['id'];?>" <?php if($v['cate_id'] == $j['id']):?>selected<?php endif;?>><?php echo $j['name'];?></option>
+
+								<?php foreach($data['cate'] as $a => $b):?>
+									<?php if($b['cate_id'] == $j['id']): ?>
+
+									<option value="<?php echo $b['id'];?>" <?php if($v['cate_id'] == $b['id']):?>selected<?php endif;?>>----<?php echo $b['name'];?></option>
+
+									<?php endif;?>
+
+								<?php endforeach;?>
+
+
+								<?php endif;?>
+								<?php endforeach;?>
+							</select>
+							
+							<select name="status_<?php echo $v['id'];?>" id="status_<?php echo $v['id'];?>" onchange="set('status', $(this).val(), <?php echo $v['id'];?>)" >
+								<option value="-1">不选择</option>
+								<?php foreach($data['status'] as $i => $j):?>
+								<option value="<?php echo $j['id'];?>" <?php if($v['status'] == $j['id']):?>selected<?php endif;?>><?php echo $j['name'];?></option>
+								<?php endforeach;?>
+							</select>
+							
+							<br />
+							
+							
+							
+				
+				</td>
+
+                        <td><a href="<?php echo siscon::link('happy/manage/data_update/id=' . $v['id']);?>" class="btn btn-default btn-xs mr5 link" role="button">编辑</a><a href="<?php echo siscon::link('happy/manage/content_list/data_id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">内容列表(参考)</a><a href="javascript:;" onclick="del($(this).parent().parent(), '<?php echo siscon::link('happy/manage/data_delete/id=' . $b['id']);?>')" class="btn btn-danger btn-xs" role="button">删除</a>
+                        <br /><br />
+                        <a href="<?php echo siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看前台</a>
+                        
+                        <a href="<?php echo $v['source_url'];?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看来源</a>
+                        
+                        <br /><br />
+                        <a href="<?php echo $v['source_base_url'];?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看来源列表</a>
+                        </td>
+                    </tr>
+                    <?php endforeach;?>
+                    
+                </tbody>
+            </table>
+            <!-- END TABLE -->
+            
+            <?php echo $data['list']['page'];?>
+
+            
+            
+            </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>
+
+
+<script>
+
+function set(col, value, id)
+{
+	$.post('<?php echo siscon::link('happy/manage/data_col_update/id=');?>' + id, {col:col,value:value}, function(t)
+	{
+		
+	})
+}
+
+</script>

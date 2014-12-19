@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php siscon::$global['title'] = '个人资料页';?>
+<?php siscon::$global['css'] = array('user');?>
+<?php siscon::$global['plugin'] = array('valid/jquery.validationEngine-zh_CN.js', 'valid/jquery.validationEngine.js', 'valid/validationEngine.jquery.css');?>
+<?php siscon::$global['p2'] = array('name' => '个人资料');?>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<body>
+<?php siscon::template('inc/menu', 'main')?>
+<!--content star-->
+<div class="container">
+	<div class="wraper">
+		<?php siscon::template('inc/minimenu', 'main')?>
+		<?php siscon::template('usermenu', 'user')?>
+		
+		<div class="set-box">
+			<div class="text">完善您的个人资料，我们将为您提供更多的服务。</div>
+				<form class="set-form post" id="submit_form" method="post" target="f1" action="<?php echo siscon::link('profile')?>">
+                <iframe id="f1" name="f1" style="display:none;" ></iframe>
+                <input type="hidden" name="function" value="show" />
+                <input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('');?>" />
+                <input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+				<div class="item">
+					<label>邮箱：</label>
+					<div class="user-name">
+						<p><?php echo $data['info']['email']?></p>
+						<div class="face"><?php if($data['info']['pic']):?><img src="<?php echo siscon::userPhoto($data['info']['pic'], '180_180')?>" /><?php endif;?><a href="<?php echo siscon::link('user-photo')?>" style="display:none;">修改头像</a></div>
+					</div>
+				</div>
+				<div class="item" style="display:none;">
+					<label>邮箱：</label>
+					<!--input id="email" name="email" class="inputs validate[required,custom[email]],ajax[ajaxEmailCallPhp]]]" type="text" value="<?php echo $data['info']['email']?>" />--> 
+				</div>
+				<div class="item">
+					<label>昵称：</label>
+					<input id="username" name="username" class="inputs validate[required,custom[username],ajax[ajaxUsernameCallPhp]]]" type="text" value="<?php echo $data['info']['username']?>" /> 
+				</div>
+				<div class="item">
+					<label>真实姓名：</label>
+					<input id="truename" name="truename" class="inputs" type="text" value="<?php echo $data['info']['truename']?>" /> 
+				</div>
+				<div class="item">
+					<label>性别：</label>
+					<div class="user-gender">
+						<span value="bm"class="bm <?php if($data['info']['sex'] == 'bm'):?>bmon<?php endif;?>">保密</span><span value="man"class="man <?php if($data['info']['sex'] == 'man'):?>manon<?php endif;?>">男</span><span value="women"class="women <?php if($data['info']['sex'] == 'women'):?>womenon<?php endif;?>">女</span>
+                        <input type="hidden" name="sex" id="sex" value="<?php echo $data['info']['sex']?>"/>
+					</div>
+				</div>
+				<div class="item">
+					<label>手机号：</label>
+					<input id="mobile" name="mobile" class="inputs validate[custom[phone]]" type="text" value="<?php echo $data['info']['mobile']?>" /> 
+				</div>
+				<input type="button" id="edit" class="ui-btn2" value="修改资料">
+			</form>
+		</div>
+	</div>	
+	
+</div>
+<!--content end-->
+
+<?php siscon::template('inc/foot', 'main')?>
+
+<script>
+	$(function(){
+        $("#edit").bind('click',function()
+        {
+            edit();
+        })
+		var gender = $('.user-gender');
+		var genderItem = gender.find('span');
+	    var sex = 'bm';	
+		genderItem.click(function(){
+            $('.'+sex+'on').removeClass(sex+'on');
+			sex = $(this).attr('value');
+			$(this).addClass(sex + 'on');
+            $("#sex").val(sex);
+		})
+		
+		$('.user-gender span').each(function()
+		{
+			if($(this).attr('class').indexOf('on') != -1)
+			{
+				$(this).click();
+			}
+		});
+		
+        $(".post").validationEngine(
+        {
+            ajaxFormValidationMethod: 'post',
+            promptType:'diy'
+        }
+        );
+	});
+    function edit()
+    {
+        //$("#edit").unbind('click').val('数据提交中...');
+        $(".post").submit();
+    
+    }
+    function show(t,send)
+    {
+        //$("#edit").click(function(){edit()}).val('修改资料');
+        //layer.alert(t);
+        location.reload();
+    }
+</script>
+
+
+</body>
+</html>

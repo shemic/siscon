@@ -1,0 +1,16 @@
+
+<title><?php if(siscon::$global['title']){echo siscon::$global['title'] . '-';}?><?php echo siscon::$global['define']['titles']?></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="keywords" content="<?php if(siscon::$global['keyword']){echo siscon::$global['keyword'] . '';}else{?><?php echo siscon::$global['define']['keywords'];}?>" />
+<meta name="description" content="<?php if(siscon::$global['desc']){echo siscon::$global['desc'] . '';}else{?><?php echo siscon::$global['define']['description'];}?>"/>
+<meta property="wb:webmaster" content="cef1cdcf2ccde380" />
+<meta property="qc:admins" content="5667240777661301767553416375636" />
+<script>
+var host = '<?php echo siscon::link()?>';
+</script>
+<link href="<?php echo SIS_FRONT_HOST . siscon::$global['define']['template']?>/css/reset.css" type="text/css" rel="stylesheet" />
+<link href="<?php echo SIS_FRONT_HOST . siscon::$global['define']['template']?>/css/common.css" type="text/css" rel="stylesheet" />
+<?php if(siscon::$global['css']){foreach(siscon::$global['css'] as $k => $v):?>
+<link href="<?php echo SIS_FRONT_HOST . siscon::$global['define']['template']?>/css/<?php echo $v?>.css" type="text/css" rel="stylesheet" />
+<?php endforeach;}?>

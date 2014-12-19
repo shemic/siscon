@@ -1,0 +1,197 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+<div class="panel-heading"><strong><?php if(isset($data['info'])):?>更新数据：<?php echo $data['info']['name'];?><?php else:?>新增数据<?php endif;?></strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('happy/manage/data_update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" name="preview" id="preview" value="1" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('happy/manage/data_list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择栏目<font color="red">*</font>：</label>
+                            <div class="col-sm-6">
+                            
+								<select name="cate_id" id="cate_id" class="input-xlarge validate[required]">
+									<option value="-1">临时栏目</option>
+									<?php foreach($data['cate'] as $k => $v):?>
+									<?php if($v['cate_id'] <= 0): ?>
+									<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && $data['info']['cate_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+
+									<?php foreach($data['cate'] as $a => $b):?>
+										<?php if($b['cate_id'] == $v['id']): ?>
+
+										<option value="<?php echo $b['id'];?>" <?php if(isset($data['info']) && $data['info']['cate_id'] == $b['id']):?>selected<?php endif;?>>----<?php echo $b['name'];?></option>
+
+										<?php endif;?>
+
+									<?php endforeach;?>
+
+
+									<?php endif;?>
+									<?php endforeach;?>
+								</select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标题<font color="red">*</font>：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="name" id="name" placeholder="请输入标题" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">发布状态：</label>
+                            <div class="col-sm-6">
+
+								<label class="radio inline">
+								<input type="radio" name="status" id="status" value="1" onclick="$('#stime_div').hide()" <?php if((isset($data['info']) && $data['info']['status'] == 1) || !isset($data['info'])):?>checked<?php endif;?>/>
+								马上发布
+								</label>
+
+								<label class="radio inline">
+								<input type="radio" name="status" id="status" value="2"  onclick="$('#stime_div').hide()" <?php if(isset($data['info']) && $data['info']['status'] == 2):?>checked<?php endif;?>/>
+								暂时不发布
+								</label>  
+
+								<label class="radio inline">
+								<input type="radio" name="status" id="status" value="3"  onclick="$('#stime_div').show()" <?php if(isset($data['info']) && $data['info']['status'] == 3):?>checked<?php endif;?>/>
+								定时发布
+								</label>  
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="stime_div" <?php if(isset($data['info']) && $data['info']['status'] == 3):?><?php else:?>style="display:none;"<?php endif;?>>
+                            <label class="col-sm-2 control-label">定时发布时间：</label>
+                            <div class="col-sm-2" >
+                                <div  class="input-group date " id="datetimepicker">
+									<input type="text" name="stime" id="stime" placeholder="请选择发布时间" class="form-control" readonly onclick="WdatePicker()" value="<?php if(isset($data['info']) && $data['info']['stime']):?><?php echo date('Y-m-d H:i:s', $data['info']['stime']);?><?php endif;?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <?php if(isset($data['info']) && $data['info']['cdate']):?>
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">修改发布时间：</label>
+                            <div class="col-sm-2" >
+									<input type="text" name="cdate" id="cdate" class="form-control" readonly onclick="WdatePicker()" value="<?php if(isset($data['info']) && $data['info']['cdate']):?><?php echo date('Y-m-d H:i:s', $data['info']['cdate']);?><?php endif;?>"/>
+                            </div>
+                        </div>
+                        <?php endif;?>
+
+<div class="form-group">
+                            <label class="col-sm-2 control-label">封面：</label>
+                            <div class="col-sm-6">
+                                <input id="file_upload1" class="upload" v="pic" name="file_upload1" type="file" multiple="true" key="news_content">
+								<input type="hidden" name="pic" id="pic" value="<?php if(isset($data['info'])):?><?php echo $data['info']['pic'];?><?php endif;?>">
+								<img src="<?php if(isset($data['info'])):?><?php echo siscon::pic($data['info']['pic']);?><?php else:?>" style="display:none;"<?php endif;?>" id="show_pic" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">内容：</label>
+                            <div class="col-sm-6">
+								<textarea name="content" id="content" placeholder="请文章内容" rows="5"><?php if(isset($data['info'])):?><?php echo $data['info']['content'];?><?php endif;?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="$('#submit_form').submit()" >保存</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <script>
+			var upload_img_url = '<?php echo siscon::$global['define']['ueditor']?>-news_content';
+			var url = '<?php echo SIS_HOST;?>public/ueditor/';
+			</script>
+			<script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST;?>ueditor/ueditor.config.js"></script>
+			<script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST;?>ueditor/ueditor.all.js"></script>
+			<script type="text/javascript">
+				$(function()
+				{
+					var editor = new UE.ui.Editor();
+					editor.render("content");
+                    $("#mag").change();
+                    $("#brand_type").change();
+                    showStyle();
+				})
+			
+            function mag_show()
+            {
+                var mag = $("#mag").val();
+                if(mag != '-1')
+                {
+                    var mag_id = '<?php if(isset($data['info']) && $data['info']['mag_id'] > 0){echo $data['info']['mag_id'];}else{echo -1;}?>';
+                    $.get('<?php echo siscon::link('mag/manage/info/type=')?>'+mag+'&mag_id='+mag_id, function(t)
+                    {
+                        $("#mag_show").html(t).show();
+                    })
+                }
+                else
+                {
+                    $("#mag_show").html('').hide();
+                }
+            }	
+
+            function brand_show()
+            {
+                var type = $("#brand_type").val();
+                if(type > 0)
+                {
+                    var brand_id = '<?php if(isset($data['brand']) && $data['brand']['id'] > 0){echo $data['brand']['id'];}else{echo -1;}?>';
+                    $.get('<?php echo siscon::link('brand/manage/info/product=1&type=')?>'+type+'&brand_id='+brand_id, function(t)
+                    {
+                        $("#brand_show").html(t).show();
+                        //$("#brand_id").change();
+                    })
+                }
+                else
+                {
+                    $("#brand_show").html('').hide();
+                    $("#product_show").html('').hide();
+                }
+            }
+            function product_show()
+            {
+                var brand = $("#brand_id").val();
+                if(brand > 0)
+                {
+                    var product_id = '<?php if(isset($data['product']) && $data['product']['id'] > 0){echo $data['product']['id'];}else{echo -1;}?>';
+                    $.get('<?php echo siscon::link('brand/manage/product_info/product_id=')?>'+product_id+'&brand_id='+brand, function(t)
+                    {
+                        $("#product_show").html(t).show();
+                    })
+                }
+                else
+                {
+                    $("#product_show").html('').hide();
+                }
+            }
+            function showStyle()
+            {
+                var style = $('#list_style').val();
+                $(".pic").hide();
+                if($("#pic_"+style).length)
+                {
+                    var pic = $("#pic_"+style);
+                    pic.show();
+                    //$("#align").val(pic.attr('align'));
+                    //$("#pic").val(pic.attr('pic'));
+                    //$("#pic_msg").val(pic.attr('pic_msg'));
+                    $("#mul_pic_tip").html('['+pic.attr('pic_msg')+']');
+                    
+                }
+                else
+                {
+					$("#mul_pic_tip").html('');
+				}
+
+            }
+           // $("#style").change();
+			</script>
+<?php siscon::template('common/footer', 'main')?>

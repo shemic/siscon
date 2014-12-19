@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>var host = '';</script>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<style type="text/css"> 
+body{padding:0;margin:0px;font-size:12px;color:#333;font-family:Verdana; background:#fbfbfb;}
+select{margin-left:1.5em;vertical-align:middle;border:1px solid #b4cceb;height:22px;font-size:12px;}
+#main{width:600px;margin:auto;}
+*{padding:0;margin:0}
+input{font-size:12px;font-family:Verdana;}
+#wrap{height:100px;}
+#wrapc{height:315px; border:#c9dff5 1px solid; background:#edf4fa;}
+#logo{text-align:center;height:64px;width:100%;line-height:64px;font-size:24px;font-weight:bold;color:#F90}
+.logo{padding:40px 0 0 0px;}
+.login{margin:0 0 0 30px;padding-top:10px;}
+.login th{height:33px;line-height:33px;list-style:none;text-align:right;font-weight:normal;width:200px;font-size:12px;}
+.login td{text-align:left;font-size:12px;}
+.input{font-size:12px;vertical-align:middle;height:17px;margin-top:2px;border:1px solid #fff;color:#666;}
+.logo-icon{border: 1px solid; border-color: #8cb7e1 #e3f0fc #e3f0fc #8cb7e1;float:left;margin-left:1.5em;_margin-left:.7em;background:#fff;padding-right:.5em;}
+.logo-icon div{background:#fff url(<?php echo SIS_PUBLIC_HOST?>images/login/login-icon.gif);width:18px;float:left;margin-top:3px;margin-left:.5em;}
+.logo-icon .pw{background-position:1px 1px;width:18px;height:20px;}
+.logo-icon .pwpd{background-position:0 -49px;width:18px;height:20px;}
+.logo-icon .yan{background-position:0 -99px;width:18px;height:20px;}
+.logo-icon .daan{background-position:1px -148px;width:18px;height:20px;}
+.logo-icon .pw2{width:9em;}
+.logo-icon .pwpd2{width:9em;}
+.logo-icon .yan2{width:6em;}
+.getpwd{ line-height:25px; padding-left:5px;}
+.getpwd a{ color:#666}
+.bottom{text-align:center;margin:auto;padding-top:1em;color:#888;}
+</style> 
+</head> 
+
+<body> 
+	<div id="main"> 
+		<div id="wrap">&nbsp;</div> 
+		<div id="wrapc"> 
+			<div class="logo"> 
+				<div id="logo"><?php echo siscon::$global['define']['title']; ?>管理登录</div> 
+			</div> 
+			<div class="login"> 
+				<form action="<?php echo siscon::link('admin/manage/login');?>"  id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo $data['refer'];?>" />
+					<table cellpadding="0" cellspacing="0" width="100%"> 
+						<tr> 
+							<th>管理员账号</th> 
+							<td>
+								<div class="logo-icon"> 
+									<div class="pw"></div> 
+									<input class="input pw2" id="username" name="username" value="<?php if(isset($data['user'])){echo $data['user']['email'];}?>" type="text" autocomplete="off" /> 
+								</div>
+							</td> 
+						</tr> 
+						<tr> 
+							<th>管理员密码</th> 
+							<td>
+								<div class="logo-icon"> 
+									<div class="pwpd"></div> 
+									<input class="input pwpd2" type="password" name="password" /> 
+								</div>
+							</td> 
+						</tr> 
+						<tr> 
+							<th></th> 
+							<td>
+								<input name="submit" type="image" src="<?php echo SIS_PUBLIC_HOST?>images/login/login.gif" style="margin-left:1.5em;margin-top:.5em;width:80px;height:30px;" /> 
+							</td> 
+						</tr> 
+					</table> 
+				</form> 
+			</div>
+		</div> 
+	</div> 
+	<script>
+	function show(t)
+	{
+		var refer = $("#update_link").val();
+		if(t == '1')
+		{
+			location.href = '<?php echo siscon::link('main/manage/home');?>';
+		}
+		else
+		{
+			alert(t);
+		}
+	}
+	
+	if(parent)
+	{
+		//parent.location.reload();
+	}
+	</script>
+	<div class="bottom">
+		Powered by <a href="<?php echo siscon::link(); ?>" target="_blank" style="color:#FA891B"><b><?php echo siscon::$global['define']['title']; ?></b></a> 版本:1.0 &nbsp;&copy; 2013 - 2014 
+	</div> 
+</body> 
+</html>

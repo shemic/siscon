@@ -1,0 +1,143 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+<div class="panel-heading"><strong><?php if(isset($data['info'])):?>更新管理员：<?php echo $data['info']['name'];?><?php else:?>新增管理员<?php endif;?></strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('admin/manage/update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('admin/manage/list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+						
+						
+                        
+                        <div class="form-group" style="display:none;">
+                            <label class="col-sm-2 control-label">选择职位：</label>
+                            <div class="col-sm-6">
+
+								<select name="group_id" id="group_id" class="validate[required]">
+								<?php foreach($data['group'] as $k => $v):?>
+								<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && $data['info']['group_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+								<?php endforeach;?>
+							</select>
+                            </div>
+                        </div>
+
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">选择角色：</label>
+                            <div class="col-sm-6">
+
+								<select name="role_id" id="role_id" class="validate[required]">
+									<?php foreach($data['role'] as $k => $v):?>
+									<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && $data['info']['role_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+									<?php endforeach;?>
+								</select>
+							</select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">管理员电子邮箱：</label>
+                            <div class="col-sm-6">
+                            <?php if(isset($data['info'])):?><?php echo $data['info']['email'];?><input type="hidden" name="email" value="<?php if(isset($data['info'])):?><?php echo $data['info']['email'];?><?php endif;?>" /><?php else:?>
+                                <input type="text" name="email" id="email" placeholder="请输入管理员电子邮箱" class="validate[required] form-control medium" value="<?php if(isset($data['info'])):?><?php echo $data['info']['email'];?><?php endif;?>"/>
+                                <?php endif;?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">管理员昵称：</label>
+                            <div class="col-sm-6">
+                            <?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><input type="hidden" name="name" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>" /><?php else:?>
+                               <input type="text" name="name" id="name" placeholder="请输入管理员昵称" class="form-control medium validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+                               <?php endif;?>
+                            </div>
+                        </div>
+
+						<?php if(!isset($data['info'])):?>
+						 <div class="form-group">
+                            <label class="col-sm-2 control-label">管理员密码：</label>
+                            <div class="col-sm-6">
+                                <input type="password" name="password" id="password" placeholder="请输入管理员密码" class="form-control medium validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['password'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+						<?php else:?>
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">管理员密码：</label>
+                            <div class="col-sm-6">
+                                <input type="password" name="password" id="password" placeholder="为空则不修改密码" class="form-control medium" value=""/>
+                            </div>
+                        </div>
+						<?php endif;?>
+
+						 <div class="form-group">
+                            <label class="col-sm-2 control-label">管理员职位：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="zhiwei" id="zhiwei" placeholder="请输入管理员职位" class="form-control medium" value="<?php if(isset($data['info'])):?><?php echo $data['info']['zhiwei'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">管理员手机号：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="mobile" id="mobile" placeholder="请输入管理员手机号" class="form-control medium" value="<?php if(isset($data['info'])):?><?php echo $data['info']['mobile'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+                    
+
+						<div class="form-group" style="display:none;">
+                            <label class="col-sm-2 control-label">管理员真实姓名：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="truename" id="truename" placeholder="请输入管理员真实姓名" class="form-control medium" value="<?php if(isset($data['info'])):?><?php echo $data['info']['truename'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">微博：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="weibo" id="weibo" placeholder="请输入微博" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['weibo'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">头像（等比例）：</label>
+                            <div class="col-sm-6">
+                                <input id="file_upload1" class="upload" v="pic" name="file_upload1" type="file" multiple="true" key="news_pic">
+								<input type="hidden" name="pic" id="pic" value="<?php if(isset($data['info'])):?><?php echo $data['info']['pic'];?><?php endif;?>">
+								<img src="<?php if(isset($data['info'])):?><?php echo $data['info']['pic'];?><?php endif;?>" id="show_pic" />
+                            </div>
+                        </div>
+
+						<div class="form-group">
+
+						<label class="col-sm-2 control-label">管理员状态：</label>
+
+						<div class="controls">
+							&nbsp;&nbsp;
+							<label class="radio inline">
+							<input type="radio" name="status" id="status" value="2"  <?php if(isset($data['info']) && $data['info']['status'] == 2):?>checked<?php endif;?>/>
+							冻结
+							</label>
+
+							<label class="radio inline">
+							<input type="radio" name="status" id="status" value="1"  <?php if((isset($data['info']) && $data['info']['status'] == 1) || !isset($data['info'])):?>checked<?php endif;?>/>
+							正常
+							</label>  
+
+							
+						</div>
+					</div>
+
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">管理员介绍：</label>
+                            <div class="col-sm-6">
+                                <textarea name="info" id="info" placeholder="请输入管理员介绍" class="form-control large validate[required]" rows="3"><?php if(isset($data['info'])):?><?php echo $data['info']['info'];?><?php endif;?></textarea>
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary"onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

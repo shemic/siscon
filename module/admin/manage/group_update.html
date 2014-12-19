@@ -1,0 +1,37 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong><?php if(isset($data['info'])):?>更新职位：<?php echo $data['info']['name'];?><?php else:?>新增职位<?php endif;?></strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('admin/manage/group_update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('admin/manage/group_list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+						
+						
+
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">职位名称：</label>
+                            <div class="col-sm-6">
+                               <input type="text" name="name" id="name" placeholder="请输入职位名称" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">职位介绍：</label>
+                            <div class="col-sm-6">
+                              <input type="text" name="connect" id="connect" placeholder="请输入职位介绍" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['connect'];?><?php endif;?>"/> 
+                            </div>
+                        </div>
+                     
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary"onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

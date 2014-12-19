@@ -1,0 +1,9 @@
+
+<?php if($data['user']):?>
+欢迎您，<a href="<?php echo siscon::link('profile')?>" target="_blank"><?php echo $data['user']['username']?></a> | <a href="<?php echo siscon::link('profile')?>" target="_blank">个人中心</a> | <a href="<?php echo siscon::link('out')?>">退出</a>
+<?php else:?>
+<a link="<?php echo siscon::link('login')?>" href="javascript:;" class="login">登录</a><a href="<?php echo siscon::link('reg')?>" class="reg">注册</a>
+<script>
+bindLogin();
+</script>
+<?php endif;?>

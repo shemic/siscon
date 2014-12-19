@@ -1,0 +1,117 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+<div class="panel-heading"><strong><?php if(isset($data['info'])):?>更新栏目：<?php echo $data['info']['name'];?><?php else:?>新增栏目<?php endif;?></strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('happy/manage/cate_update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('happy/manage/cate_list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+						
+						
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择上级栏目：</label>
+                            <div class="col-sm-6">
+
+								<select name="cate_id" id="cate_id" onchange="sup()" class="validate[required]">
+									<option value="-1">不选择上级栏目</option>
+									<?php foreach($data['list'] as $k => $v):?>
+									<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && $data['info']['cate_id'] == $v['id']):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+									<?php endforeach;?>
+								</select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">栏目名称：</label>
+                            <div class="col-sm-6">
+                               <input type="text" name="name" id="name" placeholder="请输入栏目名称" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+
+
+						 <div class="form-group">
+                            <label class="col-sm-2 control-label">栏目key(作为栏目的url)：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="key" id="key" placeholder="请输入栏目key" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['key'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">栏目排序：</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="reorder" id="reorder" placeholder="请输入数字" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['reorder'];?><?php else:?>0<?php endif;?>"/>
+                            </div>
+                        </div>
+
+						<div class="form-group" style="display:none;">
+                            <label class="col-sm-2 control-label">栏目描述：</label>
+                            <div class="col-sm-6">
+                                <textarea name="info" id="info" placeholder="请输入栏目描述" class="form-control" rows="3"><?php if(isset($data['info'])):?><?php echo $data['info']['info'];?><?php endif;?></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" >
+                            <label class="col-sm-2 control-label">是否启用：</label>
+                            <div class="col-sm-6">
+
+								<label class="radio inline">
+								<input type="radio" name="status" id="status" value="1"  <?php if((isset($data['info']) && $data['info']['status'] != 2) || !isset($data['info'])):?>checked<?php endif;?>/>
+								是
+								</label>
+
+								<label class="radio inline">
+								<input type="radio" name="status" id="status" value="2"  <?php if(isset($data['info']) && $data['info']['status'] == 2):?>checked<?php endif;?>/>
+								否
+								</label>  
+
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary"onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+			$(document).ready(function() 
+			{       
+                $("#cate_id").change();
+                //$("#style").change();
+			});
+
+            function sup()
+            {
+                var cate = $("#cate_id").val();
+                if(cate > 0)
+                {
+                    $("#style_show").show();
+                }
+                else
+                {
+                    $("#style_show").show();
+                }
+            }
+
+            function showStyle()
+            {
+                var style = $('#style').val();
+                $(".pic").hide();
+                if($("#pic_"+style).length)
+                {
+                    var pic = $("#pic_"+style);
+                    pic.show();
+                    $("#align").val(pic.attr('align'));
+                    $("#pic").val(pic.attr('pic'));
+                    $("#pic_msg").val(pic.attr('pic_msg'));
+                    
+                }
+
+            }
+            </script>
+<?php siscon::template('common/footer', 'main')?>

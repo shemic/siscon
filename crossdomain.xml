@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cross-domain-policy SYSTEM "http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd" >
+<cross-domain-policy>
+	<allow-access-from domain="115.29.51.213" />
+	<allow-access-from domain="*.taoxiaoniao.com" />
+	<allow-access-from domain="*.fashionweekly.com.cn" />
+	<allow-http-request-headers-from domain="115.29.51.213" headers="*"/>
+	<allow-http-request-headers-from domain="*.taoxiaoniao.com" headers="*"/>
+	<allow-http-request-headers-from domain="*.fashionweekly.com.cn" headers="*"/>
+</cross-domain-policy>

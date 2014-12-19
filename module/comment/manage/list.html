@@ -1,0 +1,110 @@
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>点评列表</strong></div>
+                <div class="panel-body">
+
+				<form action="<?php echo siscon::link('comment/manage/list');?>" class="form-horizontal search" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>		
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('comment/manage/list/');?>" />
+            
+            <div class="search-box clearfix">
+				<label>点评内容：<input type="text" name="search_content" id="search_content" placeholder="请输入点评内容" class="m-wrap medium" value="<?php if(isset($data['search'])):?><?php echo $data['search']['content'];?><?php endif;?>"/></label>  
+				
+				<label>用户ID：<input type="text" name="search_uid" id="search_uid" placeholder="请输入用户id" class="m-wrap medium" value="<?php if(isset($data['search'])):?><?php echo $data['search']['uid'];?><?php endif;?>"/></label>  
+				
+				<label>IP：<input type="text" name="search_ip" id="search_ip" placeholder="请输入IP" class="m-wrap medium" value="<?php if(isset($data['search'])):?><?php echo $data['search']['ip'];?><?php endif;?>"/></label>  
+
+			<label class="control-label">发布时间：
+
+			<input type="text" name="search_sctime"  placeholder="请选择发布时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['sctime']):?><?php echo $data['search']['sctime'];?><?php endif;?>"/>
+			-
+			<input type="text" name="search_ectime"  placeholder="请选择发布时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['ectime']):?><?php echo $data['search']['ectime'];?><?php endif;?>"/>
+</label>
+		<label class="control-label">排序：
+
+
+			<select name="search_order" id="search_order" >
+				<?php foreach($data['order'] as $k => $v):?>
+				<option value="<?php echo $k;?>" <?php if(isset($data['search']) && $data['search']['order'] == $k):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+				<?php endforeach;?>
+			</select>
+
+</label>
+               <input type="button" value="查询" class="search-btn" onclick="search();">
+			   </form>
+            </div>
+<!-- BEGIN TABLE -->
+            <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
+                <thead>
+                    <tr role="row">
+                        <th>
+                            <input type="checkbox" class="group-checkable">
+                        </th>
+						<th>用户ID</th>
+                        <th>用户昵称</th>
+                        <th>文章标题</th>
+                        <th>IP</th>
+
+						<th>内容</th>
+
+						<th>发布时间</th>
+
+						<th>删除</th>
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+					
+					<?php foreach($data['list']['data'] as $k => $v):?>
+                    <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
+                        <td><input type="checkbox" class="checkboxes" value="<?php echo $v['id'];?>"><span id="content_<?php echo $v['id'];?>" style="display:none;"><?php echo $v['content']?></span></td>
+                        <td><?php echo $v['uid'];?></td>
+                       <td><?php if($v['uid']>0 && $data['user'][$v['uid']]):?><?php echo $data['user'][$v['uid']]['username'];?><?php else:?>匿名用户<?php endif;?></td>
+                       <td><?php if($v['did']>0 && $data['article'][$v['did']]):?><a href="
+                        <?php 
+                        
+                        $v['cate_id'] = $data['article'][$v['did']]['cate_id'];
+                        
+                        if($v['cate_id'] > 0)
+                        {
+							$clink = $alink = $link = 'javascript:;';
+							if(isset($data['cate'][$v['cate_id']]['cate_id']) && $data['cate'][$v['cate_id']]['cate_id'] > 0)
+							{
+								$link = $data['cate'][$data['cate'][$v['cate_id']]['cate_id']]['key'] . '/';
+							}
+							else
+							{
+								$link = '';
+							}
+							$clink = $link . $data['cate'][$v['cate_id']]['key'] . '/';
+							$alink = $clink . $data['article'][$v['did']]['id']. '.html';
+							if($v['template_id'] == 5)
+							{
+								$alink = strip_tags($data['article'][$v['did']]['content']);
+								echo $alink . '" target="_blank"';
+							}
+							elseif($alink)
+							{
+								echo siscon::link($alink) . '" target="_blank"';
+							}
+						}
+						else
+						{
+							echo 'javascript:;" ';
+						}?> ><?php echo $data['article'][$v['did']]['name'];?></a><?php else:?>无名<?php endif;?></td>
+                       <td><?php echo $v['ip'];?></td>
+						<td><a href="javascript:;" onclick="layer.alert($('#content_<?php echo $v['id'];?>').html())"><?php echo siscon::cut($v['content'], 15);?></a></td>
+						<td><?php echo date('Y-m-d H:i:s', $v['cdate']);?></td>
+
+                        <td><a href="javascript:;" onclick="del($(this).parent().parent(), '<?php echo siscon::link('comment/manage/delete/id=' . $v['id']);?>')" class="btn btn-danger btn-xs" role="button">删除</a></td>
+                    </tr>
+                    <?php endforeach;?>
+                    
+                </tbody>
+            </table>
+            <!-- END TABLE -->
+
+            <?php echo $data['list']['page'];?>
+            
+            </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

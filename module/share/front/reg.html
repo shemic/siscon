@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php siscon::$global['title'] = '注册页'?>
+<?php siscon::$global['css'] = array('reg');?>
+<?php siscon::$global['plugin'] = array('valid/jquery.validationEngine-zh_CN.js', 'valid/jquery.validationEngine.min.js', 'valid/validationEngine.jquery.css');?>
+<?php siscon::$global['p2'] = array('name' => '注册');?>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<body>
+<?php siscon::template('inc/menu', 'main')?>
+
+<!--content star-->
+<div class="container">
+	<div class="wraper">
+<?php siscon::template('inc/minimenu', 'main')?>
+		<div class="reg-box clearfix">
+			<div class="reg-left">
+				<h2>注册</h2>
+				<span class="or"></span>
+				<p class="text">已有<?php echo siscon::$global['define']['title']?>帐号？点击这里，<a href="<?php echo siscon::link('login')?>">立即登录</a><br />
+忘记密码？点击这里<a href="<?php echo siscon::link('password')?>">立即找回</a></p>
+				<form class="reg-form post" id="submit_form" method="post" target="f1" action="<?php echo siscon::link('reg')?>">
+                <iframe id="f1" name="f1" style="display:none;" ></iframe>
+                <input type="hidden" name="function" value="show" />
+                <input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('');?>" />
+                <input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+				<div class="item">
+					<label>邮箱：</label>
+					<input class="input inputs validate[required,custom[email]],ajax[ajaxEmailCallPhp]]]" name="email" id="email" type="text" value="例：user@fashionweekly.com.cn" /> 
+				</div>
+
+				<div class="item">
+					<label>密码：</label>
+					<input class="input inputs validate[required]" name="pass" id="pass" type="text" value="不少于6位的数字、字母组成，注意大小写" /> 
+					<input style="display:none;" class="inputs validate[required,minSize[6],maxSize[32]]" type="password" name="password" id="password" /> 
+				</div>
+				<div class="item">
+					<label>密码重复：</label>
+					<input class="input inputs validate[required]" type="text" name="cpass" id="cpass" value="重复输入密码" /> 
+					<input style="display:none;" class="inputs validate[required,equals[password],minsize[6],maxSize[32]]" type="password" name="cpassword" id="cpassword" /> 
+				</div>
+				<div class="item">
+					<label>性别：</label>
+					<div class="user-gender">
+						<span class="bm bmon" value="bm">保密</span><span class="man" value="man">男</span><span class="women" value="women">女</span>
+                        <input type="hidden" name="sex" id="sex" value="bm"/>
+					</div>
+				</div>
+
+				<div class="item">
+					<label>昵称：</label>
+					<input class="input inputs validate[required,ajax[ajaxUsernameCallPhp]]]" type="text" name="username" id="username" value="不少于4位的数字、字母、下划线或者中文" /> 
+				</div>
+				<div class="item">
+					<label>手机号：</label>
+					<input class="input inputs validate[required,custom[phone]]" name="mobile" id="mobile" type="text" value="" /> 
+				</div>
+			
+					
+				<div class="ty-item">
+					<p><input type="checkbox" id="user" name="user" value="1" class="validate[required]"/>同意《<?php echo siscon::$global['define']['title']?>用户服务条款》</p>
+					<p><input type="checkbox" id="ding" name="ding" value="1"/>订阅<?php echo siscon::$global['define']['title']?>电子报</p>
+				</div>
+				
+				<div class="item">
+					<label>验证码：</label>
+					<input type="text" value="输入右侧图片中带颜色的数字或字母" id="code" name="code" class="input yzm inputs validate[required,ajax[ajaxCodeCallPhp]]]]" /> <img src="<?php echo siscon::link('user/front/code')?>" onclick="$(this).attr('src', $(this).attr('src')+'/'+new Date().getTime())" style="vertical-align: middle;" />
+				</div>
+				<input type="button" id="reg" class="ui-btn2" value="注册">
+			</div>
+            </form>
+<?php siscon::template('third')?>
+		</div>
+	</div>	
+	
+</div>
+<!--content end-->
+<?php siscon::template('inc/foot', 'main')?>
+
+<script>
+	$(function(){
+        $("#reg").bind('click',function()
+        {
+            reg();
+        })
+		var gender = $('.user-gender');
+		var genderItem = gender.find('span');
+	    var sex = 'bm';	
+		genderItem.click(function(){
+            $('.'+sex+'on').removeClass(sex+'on');
+			sex = $(this).attr('value');
+			$(this).addClass(sex + 'on');
+            $("#sex").val(sex);
+		})
+
+        $(".reg-box .input").each(function()
+        {
+            var value = $(this).val();
+            $(this).focus(function()
+            {
+                if($(this).val() == value)
+                {
+                    $(this).val('');
+                    $(this).get(0).style.color = 'black';
+                }
+                if($(this).attr('name').indexOf('pass') != -1 && $(this).attr('type') == 'text')
+                {
+                    $(this).hide();
+                    $('#' + $(this).attr('name') + 'word').show().focus();
+                    $('#' + $(this).attr('name') + 'word').get(0).style.color='black';
+                }
+            })
+        })
+
+        $(".post").validationEngine(
+        {
+            ajaxFormValidationMethod: 'post'
+        }
+        );
+		
+	});
+
+    function reg()
+    {
+        $(".reg-box .input").each(function()
+        {
+            $(this).click();
+        });
+        //$("#reg").unbind('click').val('注册中...');
+        layer.load(0);
+        $(".post").submit();
+    
+    }
+
+    function show(t,send)
+    {
+		layer.closeAll();
+        if(t != '操作成功')
+        {
+           // $("#reg").click(function(){reg()}).val('注册');
+            layer.alert(t);return;
+        }
+        location.href = '<?php echo siscon::link('reg-success')?>';
+    }
+
+</script>
+
+
+</body>
+</html>

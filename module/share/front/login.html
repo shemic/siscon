@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php siscon::$global['css'] = array('reg');?>
+<?php siscon::$global['p2'] = array('name' => '登录');?>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<body>
+<?php siscon::template('inc/menu', 'main')?>
+
+<!--content star-->
+<div class="container">
+	<div class="wraper">
+<?php siscon::template('inc/minimenu', 'main')?>
+		<div class="reg-box clearfix">
+			<div class="reg-left">
+				<h2>登录</h2>
+				<span class="or"></span>
+				<p class="text">没有<?php echo siscon::$global['define']['title']?>帐号？点击这里，<a href="<?php echo siscon::link('reg')?>" >立即注册</a><br />
+忘记密码？点击这里<a href="<?php echo siscon::link('password')?>">立即找回</a></p>
+				<form class="reg-form">
+				<div class="item">
+					<label>邮箱：</label>
+					<input class="input inputs validate[required,minSize[4],maxSize[20],custom[username],ajax[ajaxUsernameCallPhp]]]" type="text" name="username" id="username" value="请输入邮箱" /> 
+				</div>
+				<div class="item">
+					<label>密码：</label>
+					<input  class="input inputs validate[required,minSize[6],maxSize[32]]" type="password" name="password" id="password" /> 
+				</div>
+				<input type="button" onclick="login_action('<?php echo $data['refer']?>');" class="ui-btn2" value="登录">
+			</form>
+			</div>
+<?php siscon::template('third')?>
+		</div>
+	</div>	
+	
+</div>
+<!--content end-->
+</form>
+<?php siscon::template('inc/foot', 'main')?>
+
+<script>
+
+	$(function(){
+
+        $(".reg-box .input").each(function()
+        {
+            var value = $(this).val();
+            $(this).focus(function()
+            {
+                if($(this).val() == value)
+                {
+                    $(this).val('');
+                    $(this).get(0).style.color = 'black';
+                }
+            })
+        })
+
+	});
+    
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>订阅列表</strong></div>
+                <div class="panel-body">
+
+				<form action="<?php echo siscon::link('user/manage/ding_list');?>" class="form-horizontal search" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>		
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('user/manage/ding_list/');?>" />
+            
+            <div class="search-box clearfix">
+				<label>关键字：<input type="text" name="search_name" id="search_name" placeholder="请输入邮箱" class="m-wrap medium" value="<?php if(isset($data['search'])):?><?php echo $data['search']['name'];?><?php endif;?>"/></label>  
+
+			<label class="control-label">订阅时间：
+
+			<input type="text" name="search_sctime"  placeholder="请选择订阅时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['sctime']):?><?php echo $data['search']['sctime'];?><?php endif;?>"/>
+			-
+			<input type="text" name="search_ectime"  placeholder="请选择订阅时间" class="m-wrap medium" readonly onclick="WdatePicker()" value="<?php if(isset($data['search']) && $data['search']['ectime']):?><?php echo $data['search']['ectime'];?><?php endif;?>"/>
+</label>
+		<label class="control-label">排序：
+
+
+			<select name="search_order" id="search_order" >
+				<option value="-1">默认排序</option>
+				<?php foreach($data['order'] as $k => $v):?>
+				<option value="<?php echo $k;?>" <?php if(isset($data['search']) && $data['search']['order'] == $k):?>selected<?php endif;?>><?php echo $v['name'];?></option>
+				<?php endforeach;?>
+			</select>
+
+</label>
+               <input type="button" value="查询" class="search-btn" onclick="search();">
+			   </form>
+            </div>
+<!-- BEGIN TABLE -->
+            <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
+                <thead>
+                    <tr role="row">
+                        <th>
+                            <input type="checkbox" class="group-checkable">
+                        </th>
+
+                        <th>是否注册用户</th>
+
+						<th>邮箱</th>
+
+						<th>状态</th>
+
+						<th>管理</th>
+
+						<th>删除</th>
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+					
+					<?php foreach($data['list']['data'] as $k => $v):?>
+                    <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
+                        <td><input type="checkbox" class="checkboxes" value="<?php echo $v['id'];?>"></td>
+                       <td><?php if($v['uid'] > 0){echo '是（uid:'.$v['uid'].'）';}else{echo '否';}?></td>
+						<td><?php echo $v['email'];?></td>
+						<td><?php if($v['status'] ==1){echo '已订阅';}else{echo '退订';}?></td>
+                        <td>暂无</td>
+                        <td>暂无</td>
+                    </tr>
+                    <?php endforeach;?>
+                    
+                </tbody>
+            </table>
+            <!-- END TABLE -->
+
+            <?php echo $data['list']['page'];?>
+            
+            </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

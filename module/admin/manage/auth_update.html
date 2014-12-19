@@ -1,0 +1,37 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong><?php if(isset($data['info'])):?>更新权限：<?php echo $data['info']['auht'];?><?php else:?>新增权限<?php endif;?></strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('admin/manage/auth_update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('admin/manage/auth_list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+						
+						
+
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">权限名称：</label>
+                            <div class="col-sm-6">
+                               <input type="text" name="name" id="name" placeholder="请输入权限名称" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">权限路径：</label>
+                            <div class="col-sm-6">
+                              <?php if(isset($data['info'])):?><?php echo $data['info']['auth'];?><?php endif;?>
+                            </div>
+                        </div>
+                     
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary"onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>

@@ -1,0 +1,93 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+
+                <div class="panel-heading"><strong><?php if(isset($data['info'])):?>更新角色：<?php echo $data['info']['name'];?><?php else:?>新增角色<?php endif;?></strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('admin/manage/role_update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('admin/manage/role_list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+						
+						
+
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">角色名称：</label>
+                            <div class="col-sm-6">
+                               <input type="text" name="name" id="name" placeholder="请输入角色名称" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">角色权限：</label>
+                            <div class="col-sm-6">
+                    <ul>
+								<?php foreach($data['menu'] as $k => $v):?>
+                                <li style="margin:10px;">
+                                
+                                <input value="<?php echo $k?>" <?php if($data['my'] && $data['my'][$k]):?>checked<?php endif;?> type="checkbox" name="menu[]" id="menu_<?php echo $k?>" onclick="selectAll($(this),<?php echo $k?>)">[<?php echo $v['name']?>]
+                                
+                                <br />
+                                <ul>
+								    <?php foreach($v['child'] as $i => $j):?>
+                                    <li>
+                                    <input type="checkbox" value="<?php echo $i?>" <?php if($data['my'] && $data['my'][$k] && $data['my'][$k]['child'][$i]):?>checked<?php endif;?> onclick="selectSub($(this), <?php echo $k?>)" class="menu_<?php echo $k?>" name="menu_<?php echo $k?>[]"><?php echo $j['name']?>
+                                    </li>
+								    <?php endforeach;?>
+                                </ul>
+                                </li>
+								<?php endforeach;?>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="display:none;">
+                            <label class="col-sm-2 control-label">角色权限：</label>
+                            <div class="col-sm-6">
+                    
+								<select name="auth[]" id="auth" class="validate[required]" multiple style="height:400px;width:300px;">
+								<?php foreach($data['auth'] as $k => $v):?>
+								<option value="<?php echo $v['id'];?>" <?php if(isset($data['info']) && in_array($v['id'], $data['info']['auth'])):?>selected<?php endif;?>><?php if(!$v['name']):?>未命名<?php else:?><?php echo $v['name'];?><?php endif;?>(<?php echo $v['auth']?>)</option>
+								<?php endforeach;?>
+							</select>
+                            </div>
+                        </div>
+                     
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary"onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+            function selectAll(e,k)
+            {
+                $(".menu_" + k).each(function()
+                {
+                    $(this).get(0).checked = e.get(0).checked;
+                })
+            }
+            function selectSub(e,k)
+            {
+                check = false;
+                $(".menu_" + k).each(function()
+                {
+                    if($(this).get(0).checked)
+                    {
+                        check = true;
+                    }
+                })
+                if(check == true)
+                {
+                    $("#menu_" + k).get(0).checked = true;
+                }
+                else
+                {
+                    $("#menu_" + k).get(0).checked = false;
+                }
+            }
+            </script>
+<?php siscon::template('common/footer', 'main')?>

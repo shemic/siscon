@@ -1,0 +1,37 @@
+.listBox ul li{ width: 23%; margin-right: 2.5%; float: left;float: left; margin-bottom: 30px; }
+.listBox ul li.last{ margin-right: 0;}
+.listBox ul li h3{ height: 30px; line-height:30px; text-align: center; margin-top:5px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;}
+.listBox ul li h3 a{ font-size: 14px;}
+.listBox ul li p a{ font-size: 14px; line-height: 20px; text-align: center; display: block;color: #666;}
+.listBox ul li img{display: block;width: 100%;height: auto;}
+
+
+.js-seach { height: 38px; line-height: 38px; border:1px solid #c0c0c0; box-shadow:0 1px 1px #ededed inset; margin-bottom: 30px;   }
+.js-seach span{ display: inline-block; width:10%; text-align: center; vertical-align:bottom; }
+.js-seach input{ display: inline-block; width: 82%; color: #c9c9c9; line-height: 36px; border:none; vertical-align: bottom;}
+.js-seach a{ display: inline-block;width:8%; height: 38px; background:  url(../images/index-icon.png) no-repeat -51px -98px; vertical-align: bottom; }
+.js-text{ height: 30px; line-height: 30px; color: #999999;}
+.jsList ul li{width: 47%; float: left; margin-right: 6%; float: left; margin-bottom: 30px; }
+
+.tagblk { margin-bottom: 30px;}
+.tagblk a{  margin-right: 10px; margin-bottom: 10px; }
+
+
+@media (min-width:768px) and (max-width:999px){ /*800*/
+	.listBox ul li{ width: 48%;float: left;margin-right: 2.7%; }
+	.listBox ul li:nth-child(even){ margin-right: 0;}
+}
+
+@media (max-width:767px)and (min-width:599px){ /*600-800*/
+	.listBox ul li{ width: 48%; float: left; margin-right: 2.7%; float: left; }
+	.listBox ul li:nth-child(even){ margin-right: 0;}
+	
+	
+}
+
+@media (max-width:598px){ /*320*/
+	.listBox ul li{ width: 48%; float: left; margin-right: 2.7%; float: left; }
+	.listBox ul li:nth-child(even){ margin-right: 0;}
+}
+
+

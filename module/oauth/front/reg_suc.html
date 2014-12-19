@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php siscon::$global['title'] = '注册页-注册成功,激活操作'?>
+<?php siscon::$global['css'] = array('other');?>
+<?php siscon::$global['p2'] = array('name' => '注册成功');?>
+<?php siscon::template('inc/head', 'main')?>
+</head>
+<body>
+<?php siscon::template('inc/menu', 'main')?>
+<!--content star-->
+<div class="container">
+	<div class="wraper">
+		<?php siscon::template('inc/minimenu', 'main')?>
+		<div class="success">
+			<h2>注册成功</h2>
+
+			<p>您已注册为<?php echo siscon::$global['define']['title']?>网站用户，邮箱激活码已发送到您的邮箱中，请您尽快激活，如果您未收到邮件：<br />1. <a href="javascript:;" onclick="location.reload()">重新发送激活邮件</a><br />2. 不激活，跳转到<a href="<?php echo siscon::link()?>">风尚志首页</a></p>
+			<p class="return">10秒后自动跳转回登录前页面...</p>
+		</div>
+	</div>	
+	
+</div>
+<!--content end-->
+
+
+<?php siscon::template('inc/foot', 'main')?>
+
+
+
+
+</body>
+</html>

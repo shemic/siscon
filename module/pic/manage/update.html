@@ -1,0 +1,203 @@
+
+
+<?php siscon::template('common/header', 'main')?><div class="panel panel-default">
+                <div class="panel-heading"><strong>更新图库配置</strong></div>
+                <div class="panel-body">
+                    <form action="<?php echo siscon::link('pic/manage/update');?>" class="form-horizontal post" id="submit_form" method="post" target="f1">
+					<iframe id="f1" name="f1" style="display:none;" ></iframe>	
+					<input type="hidden" name="function" value="show" />
+					<input type="hidden" id="update_link" name="update_link" value="<?php echo siscon::link('pic/manage/list');?>" />
+					<input type="hidden" name="id" value="<?php if(isset($data['info'])):?><?php echo $data['info']['id'];?><?php endif;?>" />
+
+                        <div class="form-group">
+
+							<label class="col-sm-2 control-label">配置名称：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" name="name" id="name" placeholder="请输入中文" class="form-control validate[required]" value="<?php if(isset($data['info'])):?><?php echo $data['info']['name'];?><?php endif;?>"/>
+
+								<span class="help-inline">配置名称[必填]</span>
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置key：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" name="key" id="key" placeholder="请输入英文" class="form-control validate[required]"  <?php if(isset($data['info'])):?>readonly value="<?php echo $data['info']['key'];?>"<?php endif;?>/>
+
+								<span class="help-inline">配置的key，无法修改，必须为英文[必填]</span>
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">宽度限制：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" name="width" id="width" placeholder="请输入图片宽度限制" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['width'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">高度限制：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="height" id="height" placeholder="请输入图片高度限制" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['height'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">图片大小限制：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="size" id="size" placeholder="请输入图片大小限制" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['size'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">缩放图设置：宽度：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="t_width" id="t_width" placeholder="请输入缩放图宽度" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['t_width'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">缩放图设置：高度：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="t_height" id="t_height" placeholder="请输入缩放图高度" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['t_height'];?><?php endif;?>"/>
+
+	
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">裁图设置：宽度：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="c_width" id="c_width" placeholder="请输入裁图宽度" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['c_width'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">裁图设置：高度：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="c_height" id="c_height" placeholder="请输入裁图高度" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['c_height'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">水印设置：位置：</label>
+
+							<div class="col-sm-6">
+
+								<select name="w_type" id="w_type">
+									<?php foreach($data['water']['position'] as $k => $v):?>
+									<option value="<?php echo $k;?>" <?php if(isset($data['info']) && $data['info']['w_type'] == $k):?>selected<?php endif;?>><?php echo $v;?></option>
+									<?php endforeach;?>
+								</select>
+
+
+							</div>
+
+						</div>
+
+
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">水印设置：图片：</label>
+
+							<div class="col-sm-6">
+
+								<select name="w_pic" id="w_pic">
+									<?php foreach($data['water']['pic'] as $k => $v):?>
+									<option value="<?php echo $k;?>" <?php if(isset($data['info']) && $data['info']['w_type'] == $k):?>selected<?php endif;?>><?php echo $v[0];?></option>
+									<?php endforeach;?>
+								</select>
+
+
+							</div>
+
+						</div>
+
+						
+						<div class="form-group">
+
+							<label 
+							class="col-sm-2 control-label">图片清晰度：</label>
+
+							<div class="col-sm-6">
+
+								<input type="text" 
+								name="quality" id="quality" placeholder="请输入图片清晰度" class="form-control" value="<?php if(isset($data['info'])):?><?php echo $data['info']['quality'];?><?php endif;?>"/>
+
+
+							</div>
+
+						</div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="$('#submit_form').submit()" >提交</button>
+                            <button type="button" class="btn" onclick="show(1)">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<?php siscon::template('common/footer', 'main')?>
