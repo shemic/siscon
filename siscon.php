@@ -27,7 +27,7 @@ define('SIS_CORE_ROOT'      ,   SIS_ROOT . 'core/');
 # 定义模块类库路径
 define('SIS_MODULE_ROOT'    ,   SIS_ROOT . 'module/');
 # 定义模块可写路径
-define('SIS_WRITE_ROOT'    ,   SIS_ROOT . 'write/');
+define('SIS_WRITE_ROOT'    ,   SIS_ROOT . 'data/');
 # 定义域名
 define('SIS_DOMAIN'               	,   (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
 # 定义系统时间
