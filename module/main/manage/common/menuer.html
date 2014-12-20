@@ -1,0 +1,32 @@
+<!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar">
+            <ul class="page-sidebar-menu">
+				
+				<?php if(siscon::$global['load_modules']){foreach(siscon::$global['load_modules'] as $k => $v):?>
+					<?php siscon::template('inc/menu', $v)?>
+				<?php endforeach;}?>
+				
+				<?php
+
+				$menu = $admin['menu'] ? $admin['menu'] : siscon::$global['define']['menu'];
+				
+				?>
+				
+				<?php foreach($menu as $k => $v):?>
+				<li class=" <?php if($k == 0 ):?>open active<?php endif;?>">
+					<a href="javascript:;" class="menulist"><span class="title"><?php echo $v['name']?></span><em class="arrow"></em></a>
+					<ul class="sub-menu" style="display:<?php if($k == 0):?>block<?php else:?>none<?php endif;?>;">
+					
+					<?php if($v['child']){foreach($v['child'] as $i => $j):?>
+						<li><a <?php if($j['name'] != '文章发布'):?>target="main"<?php else:?>target="_blank"<?php endif;?> href="<?php echo siscon::link($j['link']);?>"><?php echo $j['name']?></a></li>
+					<?php endforeach;}?>
+						
+					</ul>
+
+				</li>
+				<?php endforeach;?>
+				
+
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->

@@ -1,0 +1,31 @@
+<?php if(isset($data['menu']) && $data['menu']):?>  
+        <!-- BEGIN PAGE FOOTER -->
+        <div class="footer">Powered by <?php echo siscon::$global['define']['title']?> 版本:1.0  © 2014 - 2016</div>
+        <!-- END PAGE FOOTER -->
+
+    </div>
+    <!-- END CONTAINER -->
+
+
+<script>
+    $(document).ready(function() {       
+       sidebarMenu();
+       /*iframe 自适应高度*/
+		iframeH('#main'); //#main是获取iframe的id或者className
+    });
+</script>
+<?php else:?>
+<script>
+$(function()
+{
+	if($('#update_link').length && $('#id').length)
+	{
+		<?php if(isset($data['link']) && $data['link']):?>
+		$('#update_link').val('<?php echo $data['link']?>');
+		<?php endif;?>
+	}
+})
+</script>
+<?php endif;?>
+</body>
+</html>	

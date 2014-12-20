@@ -1,0 +1,21 @@
+
+
+
+<ul class="pagination">
+
+                <?php for($i=$template['start'];$i<$template['end']+1;$i++):?>
+                <?php if($template['current'] == $i):?>
+                <li class="active"><a href="javascript:;"><?php echo $i;?></a></li> 
+                <?php else:?>
+                <?php if(strstr(siscon::$global['uri_method'], '=')):?>
+                 <li><a href="<?php echo siscon::link(siscon::$global['uri_method'] . '&pageturn=' . $i)?>" class="link" title="<?php echo $i?>"><?php echo $i?></a></li> 
+                 <?php else:?>
+                 <li><a href="<?php echo siscon::link(siscon::$global['uri_method'] . '/pageturn=' . $i)?>" class="link" title="<?php echo $i?>"><?php echo $i?></a></li> 
+                 <?php endif;?>
+                <?php endif;?>
+
+                <?php endfor;?>
+                
+               </ul>
+
+

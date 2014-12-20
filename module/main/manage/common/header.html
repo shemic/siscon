@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>var host = '';</script>
+
+  <title>管理中心</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="<?php echo SIS_PUBLIC_HOST?>css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo SIS_PUBLIC_HOST?>css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="<?php echo SIS_PUBLIC_HOST?>css/style.css" rel="stylesheet">
+
+  <!--验证样式-->
+  <link href="<?php echo SIS_PUBLIC_HOST?>css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+  <!--上传文件样式-->
+  <link rel="stylesheet" type="text/css" href="<?php echo SIS_PUBLIC_HOST?>photo/css/uploadify.css">
+  <!--日期控件样式-->
+  <link href="<?php echo SIS_PUBLIC_HOST?>css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+  <script>var config={};config.upload="<?php echo siscon::$global['define']['upload']?>";config.host="<?php echo siscon::link()?>";config.front="<?php echo SIS_HOST?>"</script>
+  <script type="text/javascript" src='<?php echo SIS_PUBLIC_HOST?>jquery.min.js'></script> 
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>plugin/bootstrap.min.js" ></script>
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>manage.js"></script>
+  <!--自动匹配脚本-->
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>plugin/bootstrap.autocomplete.js"></script>
+  <!--验证脚本-->
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>valid/jquery.validationEngine-zh_CN.js"></script>
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>valid/jquery.validationEngine.js"></script>
+
+  <!--上传文件脚本-->
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>photo/js/jquery.uploadify.min.js"></script>
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>photo/js/loaduploadify.js"></script>
+  <!--弹出窗口脚本-->
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>layer/layer.js"></script>
+
+  <!--日期控件脚本-->
+  <script type="text/javascript" src="<?php echo SIS_PUBLIC_HOST?>date/WdatePicker.js"></script>
+
+</head>
+<script>
+					m = 0;
+					</script>
+<body>
+	<?php if(isset($data['menu']) && $data['menu']):?>
+	<style>
+body
+{
+	overflow:hidden;
+}
+</style>
+    <!--BEGIN HEADER-->
+    <div class="navbar navbar-inverse navbar-fixed-top bs-top " role="top">
+        
+        <div class="clearfix">
+            <div class="logo" style="width:300px;"><a href="javascript:;" onclick="location.reload();" style="font-size:20px;color:white;font-weight:bold;" >管理中心</a></div>
+            
+            <?php $admin = siscon::core('save')->init()->get('admin')?>
+            <?php if($admin):?>
+            <div class="login-info"><span>欢迎您,<?php echo $admin['name']?></span> | <a href="<?php echo siscon::link('admin/manage/edit')?>" class="link" target="main">修改资料</a> | <a href="<?php echo siscon::link('admin/manage/login_out')?>">退出</a></div>
+            <?php else:?>
+            <?php endif;?>
+        </div>
+    </div>
+    <!--END HEADER-->
+    
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+<?php siscon::template('common/menuer')?>
+<?php endif;?>

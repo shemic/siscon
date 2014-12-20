@@ -476,7 +476,7 @@ INSERT INTO `auth` (`name`, `auth`, `cuser`, `muser`, `cdate`, `mdate`, `state`)
 ('数据列表', 'happy/manage/data_list', 'admin', 'admin', 1418801662, 1418801662, 1),
 ('数据内容列表', 'happy/manage/content_list', 'admin', 'admin', 1418802733, 1418802733, 1),
 ('数据更新', 'happy/manage/data_update', 'admin', 'admin', 1418805083, 1418805083, 1),
-('数据字段更新', 'happy/manage/data_col_update', 'admin', 'admin', 1418808179, 1418808179, 1),
+('数据字段更新', 'happy/manage/data_col_update', 'admin', 'admin', 1418808179, 1418808179, 1);
 
 --
 -- Dumping data for table `pic_config`
