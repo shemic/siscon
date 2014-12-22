@@ -21,7 +21,7 @@ p{margin:10px;}
 			<div class="main">
 				<h1><?php echo $data['info']['name'];?></h1>
 				<div class="art-info">
-                    <span><?php echo date('Y年m月d日', $data['info']['cdate'])?></span>
+                    <span><?php echo date('Y年m月d日 H:i:s', $data['info']['cdate'])?></span>
 				</div>
 				<div class="art-body">
 					<p class="desc"><?php echo $data['info']['content'];?></p>

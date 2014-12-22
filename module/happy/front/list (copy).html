@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php
+
+siscon::$global['css'] = array('list');
+
+?>
+<?php siscon::template('inc/head')?>
+</head>
+<body>
+<?php siscon::template('inc/menu')?>
+
+<div class="container" style="margin-top:30px;">
+	<div class="wraper">
+		<div class="listBox">
+			<ul class="clearfix mb35">
+			<?php foreach($data['list']['data'] as $k => $v):?>
+				<?php $v['link'] = siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>
+				<li <?php if($k > 0 && ($k+1)%4==0):?>class="last"<?php endif;?>>
+					<div class="pic"><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><img src="<?php echo siscon::pic($v['pic'])?>" alt="<?php echo $v['name']?>" ></a></div>
+					<h3><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><?php echo siscon::cut($v['name'], 14)?></a></h3>
+				</li>
+			<?php endforeach;?>
+			</ul>
+			<?php echo $data['list']['page'];?>
+			
+		</div>
+	</div>
+</div>
+
+<?php siscon::template('inc/foot')?>
+<script>
+</script>
+</body>
+</html>

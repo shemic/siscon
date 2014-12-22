@@ -57,7 +57,7 @@ class Route
             siscon::$global['uri'] = trim(siscon::$global['uri'], '/');
 
             # 默认首页
-            //empty(siscon::$global['uri']) && siscon::$global['uri'] = 'home';
+            empty(siscon::$global['uri']) && siscon::$global['uri'] = 'home';
             
         }
         else
