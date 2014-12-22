@@ -21,9 +21,9 @@ p{margin:10px;}
 		<?php foreach($data['list']['data'] as $k => $v):?>
 			<?php $v['link'] = siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>
 			<div class="main">
-				<h1><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><?php echo siscon::cut($v['name'], 14)?></a></h1>
+				<h3><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><?php echo siscon::cut($v['name'], 14)?></a></h3>
 				<div class="art-info">
-                    <span><?php echo date('Y年m月d日 H:i:s', $data['info']['cdate'])?></span>
+                    <span><?php echo date('Y年m月d日', $v['cdate'])?></span>
 				</div>
 				<div class="art-body">
 					<p class="desc"><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><img src="<?php echo siscon::pic($v['pic'])?>" alt="<?php echo $v['name']?>" ></p>
