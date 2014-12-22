@@ -20,17 +20,23 @@
 
 class Happy_Front extends Module
 {
-
 	public function home_get()
 	{
-		echo 1;die;
+        $page['template'] = 'front/turn/list';
+        $page['max'] = 10;
+        $page['path'] = 'home';
+        $this->_data['list'] = siscon::model('happy_data', 'happy')->all(array('status' => 1, 'cdate^<=' => time(), 'order^cdate' => 'desc'), $page, false);
+        
+        $this->template('list');
 	}
 
     public function all_get()
 	{
         $page['template'] = 'front/turn/list';
         $page['max'] = 10;
-        $this->_data['list'] = siscon::model('happy_data', 'happy')->all(array('status' => 1, 'cdate^<=' => time(), 'order^cdate' => 'desc'), $page, false);
+        $page['project'] = 'happy';
+        $page['path'] = 'home';
+        $this->_data['list'] = siscon::model('happy_data', 'happy')->all(array('cdate^<=' => time(), 'order^cdate' => 'desc'), $page, false);
         
         $this->template('list');
 	}
