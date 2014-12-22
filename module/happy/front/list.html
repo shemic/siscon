@@ -18,8 +18,8 @@ siscon::$global['css'] = array('list');
 			<?php foreach($data['list']['data'] as $k => $v):?>
 				<?php $v['link'] = siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>
 				<li <?php if($k > 0 && ($k+1)%4==0):?>class="last"<?php endif;?>>
-					<div class="pic"><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><img src="<?php echo siscon::pic($v['pic'])?>" alt="<?php echo $v['name']?>"></a></div>
-					<h3><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><?php echo siscon::cut($v['name'], 14)?></a></h3>
+					<div class="pic"><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><img src="<?php echo siscon::pic($v['pic'])?>" alt="<?php echo $v['name']?>" width="200"></a></div>
+					<h3><a href="<?php echo $v['link']?>" target="_blank" title="<?php echo $v['name']?>"><?php echo siscon::cut($v['name'], 10)?></a></h3>
 				</li>
 			<?php endforeach;?>
 			</ul>
