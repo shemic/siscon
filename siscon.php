@@ -40,7 +40,7 @@ define('SIS_HOST'              ,   'http://' . SIS_DOMAIN . (SIS_SELF ? SIS_SELF
 # 定义全局静态域名
 define('SIS_PUBLIC_HOST'              ,   SIS_HOST . 'public/');
 # 定义前台静态域名
-define('SIS_IMG_HOST'              ,    'http://img.fashionweekly.com.cn/');
+define('SIS_IMG_HOST'              ,    'http://siscon.paladinly.com/');
 //define('SIS_IMG_HOST'              ,    SIS_HOST);
 # 定义前台静态域名
 define('SIS_FRONT_HOST'              ,    SIS_IMG_HOST . 'public/');

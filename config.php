@@ -75,8 +75,8 @@ $config = array
 			),
     ),
     # 图片上传地址
-    'upload' => 'http://www.paladinly.com.cn/upload',
-    'ueditor' => 'http://www.paladinly.com.cn/ueditor',
+    'upload' => 'http://siscon.paladinly.com/upload',
+    'ueditor' => 'http://siscon.paladinly.com/ueditor',
     # 图片浏览地址
     'pic' => SIS_IMG_HOST . 'write/',
     # 系统头像地址

@@ -1,7 +1,9 @@
 <?php siscon::template('common/header', 'main')?><div class="panel panel-default">
                 <div class="panel-heading"><strong>管理员列表</strong></div>
                 <div class="panel-body">
-
+<div class="links-box">
+                快捷入口：<a href="<?php echo siscon::link('admin/manage/update');?>" class="btn btn-default btn-xs mr5 link" role="button">添加管理员</a>
+            </div>
             
 <!-- BEGIN TABLE -->
             <table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info">
