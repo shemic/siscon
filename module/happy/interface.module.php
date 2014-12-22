@@ -152,12 +152,13 @@ class Happy_Interface extends Module
 			
 			if($config['page'])
 			{
+				$config_page = $config['page'];
 				sleep(2);
 				$max = false;
 				if(strstr($config['page'], '|'))
 				{
 					$temp = explode('|', $config['page']);
-					$config['page'] = $temp[0];
+					$config_page = $temp[0];
 					$max = $temp[1];
 				}
 				$page = $page + 1;
@@ -167,8 +168,8 @@ class Happy_Interface extends Module
 				}
 				else
 				{
-					$config['url'] = $config['site'] . '' . str_replace('(*)', $page, $config['page']);
-					
+					$config['url'] = $config['site'] . '' . str_replace('(*)', $page, $config_page);
+
 					$this->_get($config, $page);
 				}
 			}
