@@ -78,9 +78,9 @@ $config = array
     'upload' => 'http://siscon.paladinly.com/upload',
     'ueditor' => 'http://siscon.paladinly.com/ueditor',
     # 图片浏览地址
-    'pic' => SIS_IMG_HOST . 'write/',
+    'pic' => SIS_IMG_HOST . 'data/',
     # 系统头像地址
-    'photo' => SIS_IMG_HOST . 'write/photo/',
+    'photo' => SIS_IMG_HOST . 'data/photo/',
     # 列表页对应的配置，样式
     'cate' => array
     (
