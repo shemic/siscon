@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php
+
+siscon::$global['css'] = array('article');
+
+?>
+<?php siscon::template('inc/head')?>
+
+<style>
+p{margin:10px;}
+</style>
+</head>
+<body>
+<?php siscon::template('inc/menu')?>
+
+<div class="container" style="margin-top:30px;">
+	<div class="wraper">
+		<div class="cont">
+			<div class="main">
+				<h1>HappyWell接口说明文档：</h1>
+				<div class="art-info">
+                    <span><?php echo date('Y年m月d日', time())?></span>
+				</div>
+				<div class="art-body">
+					<p class="desc"><h2>一、获取列表数据</h2></p>
+					
+					<p class="desc">接口地址：<?php echo siscon::link('interface/list/分类id/分页');?></p>
+					
+					<p class="desc">传入参数：</p>
+					
+					<p class="desc">
+						<table style="margin-left:50px;">
+							<tr>
+								<td>1、分类id：请从后台栏目列表中获取，如果为0则调取所有分类的数据</td>
+							</tr>
+							<tr>
+								<td>2、分页：分页的数字，如果是第一页，则为1</td>
+							</tr>
+						<table>
+					</p>
+					
+					<p class="desc">返回参数：</p>
+					
+					<p class="desc">
+						<table style="margin-left:50px;">
+							<tr>
+								<td>1、data：数据列表，里面的几个重要参数：name(标题)、content(内容)、pic(封面)、date(时间)、time(详细时间)、cdate(时间戳)、cate_name(栏目名)、cate_id(栏目id)、cate_link(栏目链接)</td>
+							</tr>
+							<tr>
+								<td>2、total：记录总数</td>
+							</tr>
+							<tr>
+								<td>3、maxpage：总页数</td>
+							</tr>
+							<tr>
+								<td>4、currentpage：当前页数</td>
+							</tr>
+							<tr>
+								<td>5、prevpage：上一页</td>
+							</tr>
+							<tr>
+								<td>6、nextpage：下一页</td>
+							</tr>
+						<table>
+					</p>
+					
+					<p class="desc">测试地址：<?php echo siscon::link('interface/list/1/1');?></p>
+					
+					<p class="desc"><h2>二、获取详细数据（可忽略，列表数据中已包含所有详细数据）</h2></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php siscon::template('inc/foot')?>
+<script>
+</script>
+</body>
+</html>

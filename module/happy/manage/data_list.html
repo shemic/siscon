@@ -4,7 +4,7 @@
                 <div class="panel-body">
 					
 					<div class="links-box">
-                快捷入口：<a href="<?php echo siscon::link('home');?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看前台所有数据</a><a style="display:none;" href="<?php echo siscon::link('happy/manage/data_update');?>" class="btn btn-default btn-xs mr5 link" role="button">添加新数据</a>
+                快捷入口：<a href="<?php echo siscon::link('home');?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看前台所有数据</a><a  href="<?php echo siscon::link('happy/manage/data_update');?>" class="btn btn-default btn-xs mr5 link" role="button">添加新数据</a>
             </div>
             
 				<form action="<?php echo siscon::link('happy/manage/data_list');?>" class="form-horizontal search" id="submit_form" method="post" target="f1">
@@ -150,7 +150,7 @@
 				
 				</td>
 
-                        <td><a href="<?php echo siscon::link('happy/manage/data_update/id=' . $v['id']);?>" class="btn btn-default btn-xs mr5 link" role="button">编辑</a><a href="<?php echo siscon::link('happy/manage/content_list/data_id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">内容列表(参考)</a><a href="javascript:;" onclick="del($(this).parent().parent(), '<?php echo siscon::link('happy/manage/data_delete/id=' . $b['id']);?>')" class="btn btn-danger btn-xs" role="button">删除</a>
+                        <td><a href="<?php echo siscon::link('happy/manage/data_update/id=' . $v['id']);?>" class="btn btn-default btn-xs mr5 link" role="button">编辑</a><a style="display:none;"  href="<?php echo siscon::link('happy/manage/content_list/data_id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">内容列表(参考)</a><a href="javascript:;" onclick="del($(this).parent().parent(), '<?php echo siscon::link('happy/manage/data_delete/id=' . $b['id']);?>')" class="btn btn-danger btn-xs" role="button">删除</a>
                         <br /><br />
                         <a href="<?php echo siscon::link('happy/front/view/id=' . $v['id'] . '&type=' . $v['type']);?>" class="btn btn-default btn-xs mr5 link" role="button" target="_blank">查看前台</a>
                         

@@ -12,6 +12,9 @@
                         <th>
                             <input type="checkbox" class="group-checkable">
                         </th>
+                        
+                        <th>栏目ID</th>
+                        
                         <th>栏目名</th>
 
 						<th>栏目排序</th>
@@ -33,6 +36,7 @@
 					<?php if($v['cate_id'] <= 0): ?>
                     <tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
                         <td><input type="checkbox" class="checkboxes" value="<?php echo $v['id'];?>"></td>
+                        <td><?php echo $v['id'];?></td>
                         <td><?php echo $v['name'];?></td>
 						<td><?php echo $v['reorder'];?></td>
                         <td><?php echo $v['key'];?></td>
@@ -45,6 +49,7 @@
 					<?php if($b['cate_id'] == $v['id']): ?>
 					<tr class="<?php if($k%2==0):?>even<?php else:?>odd<?php endif;?>">
                         <td><input type="checkbox" class="checkboxes" value="<?php echo $b['id'];?>"></td>
+                        <td><?php echo $v['id'];?></td>
                         <td>----<?php echo $b['name'];?></td>
 						<td><?php echo $b['reorder'];?></td>
                         <td><?php echo $b['key'];?></td>

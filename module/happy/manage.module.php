@@ -387,6 +387,11 @@ class Happy_Manage extends Module
         
         if(siscon::input('stime')) $data['stime'] = siscon::maketime(siscon::input('stime'));
         if(siscon::input('cdate')) $data['cdate'] = siscon::maketime(siscon::input('cdate'));
+        
+        if(!siscon::input('id'))
+        {
+			$data['zdate'] = time();
+		}
 
         $id = siscon::model('happy_data')->eupdate($exists, $data);
         
