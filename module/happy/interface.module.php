@@ -295,7 +295,7 @@ class Happy_Interface extends Module
 			$http = siscon::core('http');
 			$data = $http->get($data);
 			
-			$data = iconv('GB2312', 'UTF-8', $data);
+			$data = iconv('GBK', 'UTF-8', $data);
 		}
 		
 		preg_match_all('/' . $rule . '/', $data, $result);
