@@ -5,6 +5,10 @@ siscon
 
 提交到本库：
 git add ...
+
 git commit -m "..."
+
 git remote add origin https://github.com/paladinly/siscon.git
+
 git push -u origin master
+  
