@@ -117,21 +117,6 @@
 							</div>
 
 						</div>
-
-						<div class="form-group">
-
-							<label class="col-sm-2 control-label">配置图片/视频/文字的匹配正则：</label>
-
-							<div class="col-sm-6">
-
-								<textarea type="text" name="pic_rule" id="pic_rule" placeholder="请输入配置图片/视频/文字的匹配正则" class="form-control validate[required]" ><?php if(isset($data['info'])):?><?php echo $data['info']['pic_rule'];?><?php endif;?></textarea>
-
-								<span class="help-inline">配置图片/视频/文字的匹配正则，如匹配文字，下边的内容无需填写[必填]</span>
-
-							</div>
-
-						</div>
-						
 						
 						<div class="form-group">
 
@@ -141,11 +126,26 @@
 
 								<textarea type="text" name="content_rule" id="content_rule" placeholder="请输入配置内容的匹配正则" class="form-control" ><?php if(isset($data['info'])):?><?php echo $data['info']['content_rule'];?><?php endif;?></textarea>
 
-								<span class="help-inline">配置内容的匹配正则[必填]</span>
+								<span class="help-inline">配置内容的匹配正则，配置正文内容的规则</span>
 
 							</div>
 
 						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label">配置图片的匹配正则：</label>
+
+							<div class="col-sm-6">
+
+								<textarea type="text" name="pic_rule" id="pic_rule" placeholder="请输入配置图片的匹配正则" class="form-control" ><?php if(isset($data['info'])):?><?php echo $data['info']['pic_rule'];?><?php endif;?></textarea>
+
+								<span class="help-inline">如果想抓取图片到本地，本配置必须填写，如果只想抓取内容，无需填写本项</span>
+
+							</div>
+
+						</div>
+
 						
 						<div class="form-group">
 

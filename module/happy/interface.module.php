@@ -96,10 +96,13 @@ class Happy_Interface extends Module
 			foreach($result[1] as $k => $v)
 			{
 				list($html, $name) = $this->_match($v, $config['name_rule'], 'source_url');				
-				
+
 				if($name && $name[1] && isset($name[1][0]))
 				{
-					list($temp, $pic) = $this->_match($html, $config['pic_rule']);
+					if($config['pic_rule'])
+					{
+						list($temp, $pic) = $this->_match($html, $config['pic_rule']);
+					}
 					
 					if($config['content_rule'])
 					{
@@ -112,25 +115,29 @@ class Happy_Interface extends Module
 						list($temp, $date) = $this->_match($html, $config['date_rule']);
 					}
 					
-					if($pic && $pic[1])
+					# 将名称入库并生成一个id
+					$data_id = $this->_data($name[1][0], $result[3][$k], $config['id'], $pic[1], $config['url'], $v, $config['cate_id'], $config['type']);
+					
+					if($data_id)
 					{
-						# 将名称入库并生成一个id
-						$data_id = $this->_data($name[1][0], $result[3][$k], $config['id'], $pic[1], $config['url'], $v, $config['cate_id'], $config['type']);
+						$contents = array();
 						
-						if($data_id)
+						if($date && $date[1] && $date[1][0])
 						{
-							$img = array();
-							if($content && $content[1])
+							$cdate = $date[1][0];
+						}
+						
+						if($content && $content[1])
+						{
+							foreach($content[1] as $a => $b)
 							{
-								foreach($content[1] as $a => $b)
-								{
-									$img[] = '<p>'.$b.'</p>';
-								}
+								$contents[] = '<p>'.$b.'</p>';
 							}
-							if($date && $date[1] && $date[1][0])
-							{
-								$cdate = $date[1][0];
-							}
+						}
+						
+						if($pic && $pic[1])
+						{
+							# 图片特殊处理
 							foreach($pic[1] as $i => $j)
 							{
 								$title = '';
@@ -141,11 +148,11 @@ class Happy_Interface extends Module
 								
 								$j = $this->_content($title, $j, $i, $data_id, $config['id'], $cdate, $config['type']);
 								
-								$img[] = '<p><img src="'.siscon::pic($j).'" alt="'.$title.'" /></p>';
+								$contents[] = '<p><img src="'.siscon::pic($j).'" alt="'.$title.'" /></p>';
 							}
-							
-							$this->_data_content($data_id, $img, $cdate);
 						}
+						
+						$this->_data_content($data_id, $contents, $cdate);
 					}
 				}
 			}
@@ -230,7 +237,14 @@ class Happy_Interface extends Module
 	# 保存数据的内容
 	private function _data_content($id, $content, $cdate)
 	{
-		$update['content'] = implode('', $content);
+		if(is_array($content))
+		{
+			$update['content'] = implode('', $content);
+		}
+		else
+		{
+			$update['content'] = $content;
+		}
 		if($cdate) $update['cdate'] = siscon::maketime($cdate);
 		
 		siscon::model('happy_data')->update($update, array('id' => $id));

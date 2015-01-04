@@ -130,7 +130,7 @@ class Happy_Manage extends Module
         $data['pic_rule'] = siscon::text_encode(siscon::input('pic_rule'));
         if(!$data['pic_rule'])
         {
-		    siscon::error('图片规则不能为空');
+		    //siscon::error('图片规则不能为空');
         }
 
         $exists = $data;
